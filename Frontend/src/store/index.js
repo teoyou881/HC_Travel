@@ -32,6 +32,16 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
+    // getDefaultMdddleware -> this is the basic middleware redux-toolkit has
+    // when using persist, in action, some non-serializable value are passed
+    // and it may raise an error.
+    // Redux can't pass non-serializable value.
+    // so, let middleware not to check serializableCheck when persist is only used
+    // persist types should be listed in ignoredActions array in serializableCheck.
+    /* Why only accept serializable values?
+    Redux recommends that you only store serializable values 
+    to ensure that the UI reflects what you expect, 
+    or for time travel functionality and proper debugging. */
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
