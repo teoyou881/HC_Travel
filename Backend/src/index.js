@@ -19,16 +19,23 @@ dotenv.config();
 app.use(cors());
 app.use(express.json()); // for JSON
 app.use(express.urlencoded({ extended: true })); // for x-www-form-urlencoded (Values submitted in form)
+// Use absolute paths because relative paths can cause errors.
+// app.use(express.static("uploads"));
+app.use(express.static(path.join(__dirname, "../uploads")));
+// error handling
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send(err.message || "error occured at server side");
+});
 
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("success to connect");
-    })
-    .catch(() => {
-        console.log("fail to connect");
+app.get("*", (req, res, next) => {
+    //throw new Error("enkfsnfl");
+
+    //When an error occurs in asynchronous communication, it should be passed to next().
+    setImmediate(() => {
+        next(new Error("asynchronous communication"));
     });
-const db = mongoose.connection;
+});
 app.get("/", (req, res) => {
     res.send("Hi");
 });
@@ -37,10 +44,14 @@ app.post("/", (req, res) => {
     res.json(req.body);
 });
 
-// Use absolute paths because relative paths can cause errors.
-// app.use(express.static("uploads"));
-app.use(express.static(path.join(__dirname, "../uploads")));
-
 app.listen(4000, () => {
-    console.log(`port number is ${port}`);
+    mongoose
+        .connect(process.env.MONGO_URI)
+        .then(() => {
+            console.log("success to connect");
+            console.log(`port number is ${port}`);
+        })
+        .catch(() => {
+            console.log("fail to connect");
+        });
 });
