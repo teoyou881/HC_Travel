@@ -9,7 +9,10 @@ const app = express();
  * to grant permission to access selected resources from other sources.
  */
 const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const port = 4000;
+dotenv.config();
 
 // can set options. --> cors(corsOptions)  search for it later if it is nedded.
 // can also apply it to specific routes.
@@ -17,6 +20,15 @@ app.use(cors());
 app.use(express.json()); // for JSON
 app.use(express.urlencoded({ extended: true })); // for x-www-form-urlencoded (Values submitted in form)
 
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log("success to connect");
+    })
+    .catch(() => {
+        console.log("fail to connect");
+    });
+const db = mongoose.connection;
 app.get("/", (req, res) => {
     res.send("Hi");
 });
