@@ -2,6 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 const RegisterPage = () => {
     const {
+        //register() function to register each input field
+        //handleSubmit() to handle the submit event fired by the form element.
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
@@ -9,6 +11,8 @@ const RegisterPage = () => {
     } = useForm({ mode: "onChange" });
 
     const onSubmit = ({ email, password, name }) => {
+        //alert(email);
+        // When defaultValues is not supplied to reset API, then HTML native reset API will be invoked to restore the form.
         reset();
     };
 
