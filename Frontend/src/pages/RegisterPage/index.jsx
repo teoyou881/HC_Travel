@@ -36,9 +36,7 @@ const RegisterPage = () => {
             message: "Wrong or invalid e-mail address. Please correct it and try again. ",
         },
     };
-    const userName = {
-        required: "Enter your name",
-    };
+
     const userPassword = {
         required: "Enter your password",
         minLength: {
@@ -46,7 +44,9 @@ const RegisterPage = () => {
             message: "Minimum 6 characters required",
         },
     };
-
+    const userName = {
+        required: "Enter your name",
+    };
     return (
         <section className="flex flex-col justify-center mt-20 max-w-lg m-auto ">
             <div className="p-6 bg-white rounded-md shadow-md">
