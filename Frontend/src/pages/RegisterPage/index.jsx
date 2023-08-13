@@ -1,5 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { registerUser } from "./../../store/thunkFunctions";
+
 const RegisterPage = () => {
     const {
         //register() function to register each input field
@@ -7,12 +10,22 @@ const RegisterPage = () => {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
+        // When defaultValues is not supplied to reset API, then HTML native reset API will be invoked to restore the form.
         reset,
     } = useForm({ mode: "onChange" });
+    const dispatch = useDispatch();
 
     const onSubmit = ({ email, password, name }) => {
         //alert(email);
-        // When defaultValues is not supplied to reset API, then HTML native reset API will be invoked to restore the form.
+
+        const body = {
+            email,
+            password,
+            name,
+            image: "https://cdn.pixabay.com/photo/2018/01/21/14/16/woman-3096664_1280.jpg",
+        };
+
+        dispatch(registerUser(body));
         reset();
     };
 
