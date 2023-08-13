@@ -23,27 +23,22 @@ app.use(express.urlencoded({ extended: true })); // for x-www-form-urlencoded (V
 // app.use(express.static("uploads"));
 app.use(express.static(path.join(__dirname, "../uploads")));
 // error handling
+
+app.use("/users", require("./routes/users"));
+
+// app.get("*", (req, res, next) => {
+//     //throw new Error("enkfsnfl");
+
+//     //When an error occurs in asynchronous communication, it should be passed to next().
+//     setImmediate(() => {
+//         next(new Error("asynchronous communication"));
+//     });
+// });
+
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.send(err.message || "error occured at server side");
 });
-
-app.get("*", (req, res, next) => {
-    //throw new Error("enkfsnfl");
-
-    //When an error occurs in asynchronous communication, it should be passed to next().
-    setImmediate(() => {
-        next(new Error("asynchronous communication"));
-    });
-});
-app.get("/", (req, res) => {
-    res.send("Hi");
-});
-app.post("/", (req, res) => {
-    console.log(req.body);
-    res.json(req.body);
-});
-
 app.listen(4000, () => {
     mongoose
         .connect(process.env.MONGO_URI)
@@ -51,7 +46,8 @@ app.listen(4000, () => {
             console.log("success to connect");
             console.log(`port number is ${port}`);
         })
-        .catch(() => {
+        .catch((e) => {
+            console.log(e);
             console.log("fail to connect");
         });
 });

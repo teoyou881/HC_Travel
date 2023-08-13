@@ -26,13 +26,13 @@ const userSlice = createSlice({
             })
             .addCase(registerUser.fulfilled, (state) => {
                 state.isLoading = false;
-                toast.info("success to create an account");
+                toast.success("success to create an account");
             })
             .addCase(registerUser.rejected, (state, action) => {
                 console.log(action);
                 state.isLoading = false;
                 state.error = action.payload;
-                toast.info(action.payload);
+                toast.error(action.payload);
             });
     },
 });
