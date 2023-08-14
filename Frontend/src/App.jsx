@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { authUser } from "./store/thunkFunctions";
 import { useEffect } from "react";
+import ProtectedPage from "./pages/ProtectedPage";
 
 function Layout() {
     return (
@@ -44,11 +45,16 @@ function App() {
                 {/* Paths you can take regardless of login  */}
                 <Route index element={<LandingPage />}></Route>
 
+                {/* ex */}
+                <Route element={<ProtectedRoutes isAuth={isAuth} />}>
+                    <Route path="protected" element={<ProtectedPage />}></Route>
+                </Route>
+
                 {/* Paths that can't be taken by logged in users */}
-                {/* <Route element={<NotAuthRoutes />}> */}
-                <Route path="/login" element={<LoginPage />}></Route>
-                <Route path="/register" element={<RegisterPage />}></Route>
-                {/* </Route> */}
+                <Route element={<NotAuthRoutes isAuth={isAuth} />}>
+                    <Route path="/login" element={<LoginPage />}></Route>
+                    <Route path="/register" element={<RegisterPage />}></Route>
+                </Route>
 
                 {/* Paths that only signed-in people can take */}
                 {/* todo */}
