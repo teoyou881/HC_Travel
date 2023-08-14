@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const auth = require("../middelware/auth");
 
 router.post("/register", async (req, res, next) => {
-    // console.log("/register");
     try {
         const user = new User(req.body);
         await user.save();
@@ -15,7 +15,6 @@ router.post("/register", async (req, res, next) => {
 });
 
 router.post("/login", async (req, res, next) => {
-    console.log("post  users/login");
     // req.body email, password
     try {
         // check whether user is exist or not
@@ -42,8 +41,14 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
-router.get("/", async (req, res) => {
-    console.log("get");
+router.get("/auth", auth, async (req, res, next) => {
+    return res.json({
+        id: req.user._id,
+        email: req.user.email,
+        name: req.user.name,
+        role: req.user.role,
+        image: req.user.image,
+    });
 });
 
 module.exports = router;
