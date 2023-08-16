@@ -2,7 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./../../store/thunkFunctions";
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
+    const navigate = useNavigate();
     const {
         //register() function to register each input field
         //handleSubmit() to handle the submit event fired by the form element.
@@ -22,8 +24,16 @@ const LoginPage = () => {
             password,
         };
 
-        dispatch(loginUser(body));
-        reset();
+        dispatch(loginUser(body))
+            .then(() => {
+                navigate("/");
+            })
+            .catch(() => reset());
+        // if (!result) {
+        //     reset();
+        // } else {
+        //     navigate("/");
+        // }
     };
 
     const userEmail = {

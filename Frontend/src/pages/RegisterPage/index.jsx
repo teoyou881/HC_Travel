@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { registerUser } from "./../../store/thunkFunctions";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
     const {
@@ -14,6 +15,7 @@ const RegisterPage = () => {
         reset,
     } = useForm({ mode: "onChange" });
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = ({ email, password, name }) => {
         //alert(email);
@@ -25,7 +27,11 @@ const RegisterPage = () => {
             image: "https://cdn.pixabay.com/photo/2018/01/21/14/16/woman-3096664_1280.jpg",
         };
 
-        dispatch(registerUser(body));
+        dispatch(registerUser(body))
+            .then(() => {
+                navigate("/");
+            })
+            .catch(() => reset());
         reset();
     };
 

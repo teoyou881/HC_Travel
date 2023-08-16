@@ -20,6 +20,7 @@ const userSchema = mongoose.Schema({
         default: 0,
     },
     image: String,
+    refreshToken: String,
 });
 
 // Before User model is saved

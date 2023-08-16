@@ -7,6 +7,18 @@ const auth = require("../middelware/auth");
 router.post("/register", async (req, res, next) => {
     try {
         const user = new User(req.body);
+
+        const payload = {
+            // MongoDB ID s object. so it has to be converted to string.  --> use toHexString
+            userId: user._id.toHexString(),
+        };
+
+        const refreshToken = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+            issuer: "HC",
+            audience: user.email,
+        });
+        user.refreshToken = refreshToken;
         await user.save();
         return res.sendStatus(200);
     } catch (error) {
@@ -34,7 +46,16 @@ router.post("/login", async (req, res, next) => {
             userId: user._id.toHexString(),
         };
         // token will be expired in 1 hour.
-        const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+            issuer: "HC",
+            audience: payload.userId,
+        });
+        const refreshToken = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+            issuer: "HC",
+            audience: payload.userId,
+        });
         return res.json({ user, accessToken });
     } catch (error) {
         next(error);

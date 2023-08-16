@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { registerUser, loginUser, authUser, logoutUser } from "./thunkFunctions";
 import { toast } from "react-toastify";
 import localStorage from "redux-persist/es/storage";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
     userData: {
@@ -30,7 +31,6 @@ const userSlice = createSlice({
                 toast.success("success to create an account");
             })
             .addCase(registerUser.rejected, (state, action) => {
-                // console.log(action.payload);
                 state.isLoading = false;
                 state.error = action.payload;
                 toast.error(action.payload);
