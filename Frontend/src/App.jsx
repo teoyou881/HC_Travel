@@ -13,6 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { authUser } from "./store/thunkFunctions";
 import { useEffect } from "react";
 import ProtectedPage from "./pages/ProtectedPage";
+import UploadProductPage from "./pages/UploadProductPage/index";
+import DetailProductPage from "./pages/DetailProductPage/index";
+import CartPage from "./pages/CartPage/index";
+import HistoryPage from "./pages/HistoryPage/index";
 
 function Layout() {
     return (
@@ -58,7 +62,11 @@ function App() {
 
                 {/* ex */}
                 <Route element={<ProtectedRoutes isAuth={isAuth} />}>
-                    <Route path="protected" element={<ProtectedPage />}></Route>
+                    <Route path="protected" element={<ProtectedPage />} />
+                    <Route path="/product/upload" element={<UploadProductPage />} />
+                    <Route path="/product/:productId" element={<DetailProductPage />} />
+                    <Route path="/user/cart" element={<CartPage />} />
+                    <Route path="/history" element={<HistoryPage />} />
                 </Route>
 
                 {/* Paths that can't be taken by logged in users */}

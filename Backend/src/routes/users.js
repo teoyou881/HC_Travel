@@ -68,6 +68,8 @@ router.get("/auth", auth, async (req, res, next) => {
         role: req.user.role,
         image: req.user.image,
         accessToken: req.user.accessToken,
+        cart: req.user.cart,
+        history: req.user.history,
     });
 });
 

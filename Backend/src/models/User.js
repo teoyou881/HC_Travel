@@ -21,6 +21,14 @@ const userSchema = mongoose.Schema({
     },
     image: String,
     refreshToken: String,
+    cart: {
+        type: Array,
+        default: [],
+    },
+    history: {
+        type: Array,
+        default: [],
+    },
 });
 
 // Before User model is saved
