@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { registerUser, loginUser, authUser, logoutUser } from "./thunkFunctions";
 import { toast } from "react-toastify";
 import localStorage from "redux-persist/es/storage";
-import { useNavigate } from "react-router-dom";
 
 const initialState = {
     userData: {
@@ -40,9 +39,11 @@ const userSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.userData = action.payload;
+                state.userData = action.payload.user;
+                state.accessToken = action.payload.accessToken;
                 state.isAuth = true;
                 localStorage.setItem("accessToken", action.payload.accessToken);
+                localStorage.setItem("refreshToken", action.payload.user.refreshToken);
 
                 //toast.success("success to login");
             })
@@ -56,7 +57,8 @@ const userSlice = createSlice({
             })
             .addCase(authUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.userData = action.payload;
+                state.userData = action.payload.user;
+                state.accessToken = action.payload.accessToken;
                 state.isAuth = true;
             })
             .addCase(authUser.rejected, (state, action) => {
@@ -64,6 +66,7 @@ const userSlice = createSlice({
                 state.error = action.payload;
                 state.isAuth = false;
                 localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
                 toast.error(action.payload);
             })
             .addCase(logoutUser.pending, (state) => {

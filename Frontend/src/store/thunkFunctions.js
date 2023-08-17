@@ -23,9 +23,10 @@ export const loginUser = createAsyncThunk("user/loginUser", async (body, thunkAP
     }
 });
 
-export const authUser = createAsyncThunk("user/authUser", async (_, thunkAPI) => {
+export const authUser = createAsyncThunk("user/authUser", async (email, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`/users/auth`);
+        const response = await axiosInstance.get(`/users/auth`, email);
+        // console.log("thunkFunction", response.data);
         return response.data;
     } catch (error) {
         console.log(error);

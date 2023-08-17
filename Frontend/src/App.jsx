@@ -31,13 +31,24 @@ function Layout() {
 function App() {
     const dispatch = useDispatch();
     const isAuth = useSelector((state) => state.user?.isAuth);
+    const temp = useSelector((state) => state.user.userData.user?.email);
+    const refreshToken = useSelector((state) => state.user.userdata?.refreshToken);
+    let email = "";
+    if (temp !== undefined) {
+        email = temp;
+    }
+    const user = {
+        email,
+        refreshToken,
+    };
+
     const { pathname } = useLocation;
 
     useEffect(() => {
         if (isAuth) {
-            dispatch(authUser());
+            dispatch(authUser(user));
         }
-    }, [isAuth, pathname, dispatch]);
+    }, [isAuth, pathname, dispatch, user]);
 
     return (
         <Routes>
