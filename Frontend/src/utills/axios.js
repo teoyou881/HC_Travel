@@ -23,4 +23,17 @@ axiosInstance.interceptors.request.use(
     }
 );
 
+axiosInstance.interceptors.response.use(
+    function (response) {
+        return response;
+    },
+    function (error) {
+        if (error.response.data === "jwt expired") {
+            window.location.reload();
+            window.alert("Token is expired. Please login again.");
+        }
+        return Promise.reject(error);
+    }
+);
+
 export default axiosInstance;
