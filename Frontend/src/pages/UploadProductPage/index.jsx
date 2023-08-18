@@ -1,6 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { produce } from "immer";
+import { useSelector } from "react-redux";
+import axiosInstance from "./../../utills/axios";
+import { useNavigate } from "react-router-dom";
 
 const continents = [
     { key: 1, value: "Africa" },
@@ -20,6 +23,9 @@ function UploadProductPage() {
         continents: 1,
         images: [],
     });
+
+    const userId = useSelector((state) => state.user?.userData._id);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,11 +55,25 @@ function UploadProductPage() {
         );
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         // to do
         // Create data and send it to the backend.
-        console.log(product);
+        // console.log(product);
+
+        //const { title, description, price, images, continents } = product;
+        const body = {
+            writer: userId,
+            ...product,
+        };
+
+        try {
+            await axiosInstance.post("/products", body);
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+        }
     };
     return (
         <section>
