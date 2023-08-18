@@ -23,10 +23,11 @@ export const loginUser = createAsyncThunk("user/loginUser", async (body, thunkAP
     }
 });
 
-export const authUser = createAsyncThunk("user/authUser", async (email, thunkAPI) => {
+export const authUser = createAsyncThunk("user/authUser", async (refreshToken, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`/users/auth`, email);
-        // console.log("thunkFunction", response.data);
+        const response = await axiosInstance.get(`/users/auth`, refreshToken);
+
+        // console.log("thunkFunction auhUser ==>  ", response);
         return response.data;
     } catch (error) {
         console.log(error);

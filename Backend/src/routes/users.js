@@ -36,7 +36,7 @@ router.post("/login", async (req, res, next) => {
             time: new Date(),
         };
         const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: "5m",
+            expiresIn: "5s",
             issuer: "HC",
             audience: user.email,
         });
@@ -61,18 +61,21 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.get("/auth", auth, async (req, res, next) => {
-    return res.json({
+    const user = {
         id: req.user._id,
         email: req.user.email,
         name: req.user.name,
         role: req.user.role,
         image: req.user.image,
-        accessToken: req.user.accessToken,
         cart: req.user.cart,
         history: req.user.history,
+    };
+
+    return res.json({
+        user,
+        accessToken: req.accessToken,
     });
 });
-
 router.post("/logout", auth, async (req, res, next) => {
     try {
         return res.sendStatus(200);

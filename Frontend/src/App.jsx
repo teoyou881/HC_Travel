@@ -35,24 +35,15 @@ function Layout() {
 function App() {
     const dispatch = useDispatch();
     const isAuth = useSelector((state) => state.user?.isAuth);
-    const temp = useSelector((state) => state.user.userData.user?.email);
-    const refreshToken = useSelector((state) => state.user.userdata?.refreshToken);
-    let email = "";
-    if (temp !== undefined) {
-        email = temp;
-    }
-    const user = {
-        email,
-        refreshToken,
-    };
+    const refreschToken = useSelector((state) => state.user.userData?.refreschToken);
 
     const { pathname } = useLocation;
 
     useEffect(() => {
         if (isAuth) {
-            dispatch(authUser(user));
+            dispatch(authUser(refreschToken));
         }
-    }, [isAuth, pathname, dispatch, user]);
+    }, [isAuth, pathname, dispatch, refreschToken]);
 
     return (
         <Routes>

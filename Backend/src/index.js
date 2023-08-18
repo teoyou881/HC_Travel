@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, "../uploads")));
 // error handling
 
 app.use("/users", require("./routes/users"));
+app.use("/products", require("./routes/products"));
 
 // app.get("*", (req, res, next) => {
 //     //throw new Error("enkfsnfl");

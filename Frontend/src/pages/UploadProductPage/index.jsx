@@ -69,7 +69,8 @@ function UploadProductPage() {
         };
 
         try {
-            await axiosInstance.post("/products", body);
+            const result = await axiosInstance.post("/products", body);
+            console.log("uploadProductPage handleSubmit ==>  ", result);
             navigate("/");
         } catch (error) {
             console.log(error);

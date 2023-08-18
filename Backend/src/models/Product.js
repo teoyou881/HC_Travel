@@ -4,7 +4,7 @@ const ProductSchma = mongoose.Schema({
     // References the user ID value.
     // The user's id value is ObjectId('~~~~').
     writer: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
     title: {

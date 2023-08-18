@@ -16,6 +16,7 @@ axiosInstance.interceptors.request.use(
         // It's handled differently depending on the token sent, and since we're using a JWT,
         // we need to use a bearer.
         config.headers.Authorization = "Bearer " + localStorage.getItem("accessToken");
+        config.headers.RefreshToken = localStorage.getItem("refreshToken");
         return config;
     },
     function (error) {
@@ -28,7 +29,7 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     function (error) {
-        if (error.response.data === "jwt expired") {
+        if (error.response?.data === "jwt expired" || error.response === "jwt expired") {
             window.location.reload();
             window.alert("Token is expired. Please login again.");
         }
