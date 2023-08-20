@@ -1,10 +1,28 @@
 import React from "react";
 import Dropzone from "react-dropzone";
+import axiosInstance from "../utills/axios";
 
 function FileUpload({ images, onImageChange }) {
+    const handleDrop = async (files) => {
+        // must use FormData when we pass file
+        let formData = new FormData();
+        const config = {
+            // content type should be changed to multipart/form-data
+            header: { "content-type": "multipart/form-data" },
+        };
+        formData.append("file", files[0]);
+
+        try {
+            const response = await axiosInstance.post("/products/image", formData, config);
+            onImageChange([...images, response.data.fileName]);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="flex gap-4">
-            <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
+            <Dropzone onDrop={handleDrop}>
                 {({ getRootProps, getInputProps }) => (
                     <section className="min-w-[300px] h-[300px] border flex items-center justify-center">
                         <div {...getRootProps()}>
