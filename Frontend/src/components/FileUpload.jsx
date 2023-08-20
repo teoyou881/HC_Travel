@@ -38,7 +38,7 @@ function FileUpload({ images, onImageChange }) {
                     <div key={image}>
                         <img
                             className="min-w-[300px] h-[300px]"
-                            src={`${import.meta.env.TIVE_SERVER_URL}/${image}`}
+                            src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
                             alt={image}
                         />
                     </div>
