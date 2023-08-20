@@ -4,6 +4,7 @@ import { produce } from "immer";
 import { useSelector } from "react-redux";
 import axiosInstance from "./../../utills/axios";
 import { useNavigate } from "react-router-dom";
+import FileUpload from "../../components/FileUpload";
 
 const continents = [
     { key: 1, value: "Africa" },
@@ -76,12 +77,27 @@ function UploadProductPage() {
             console.log(error);
         }
     };
+
+    const handleImages = (newImages) => {
+        // setProduct((prevState)=>({
+        //     ...prevState,
+        //     images:newImages
+        // }))
+
+        setProduct(
+            produce((draft) => {
+                draft.images = newImages;
+            })
+        );
+    };
+
     return (
         <section>
             <div className="text-center m-7">
                 <h1>UploadProductPage</h1>
             </div>
             <form className="mt-6" onSubmit={handleSubmit}>
+                <FileUpload images={product.images} onImageChange={handleImages} />
                 <div className="mt-4">
                     <label htmlFor="title">Title</label>
                     <input
