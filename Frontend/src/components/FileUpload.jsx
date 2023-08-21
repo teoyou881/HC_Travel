@@ -1,19 +1,6 @@
 import React from "react";
 import Dropzone from "react-dropzone";
 import axiosInstance from "../utills/axios";
-import fs from "fs";
-// When I use VITE, process is not defined at node_modules/path/path.js error is occured.
-// To solve this problem, add some code to vite.config.js
-/*
- define: {
-        "process.env": {},
-    },
-*/
-import path from "path";
-
-// The ES module does not have a __dirname variable,
-// so we need to create a __dirname variable like below.
-
 function FileUpload({ images, onImageChange }) {
     const handleDrop = async (files) => {
         // must use FormData when we pass file
@@ -50,7 +37,10 @@ function FileUpload({ images, onImageChange }) {
             const response = await axiosInstance.delete("/products/image", {
                 params: { image: image },
             });
-            onImageChange([...images, response.data.fileName]);
+
+            let newImages = [];
+            newImages = images.filter((image) => image !== response.data);
+            onImageChange(newImages);
         } catch (error) {
             console.log(error);
         }

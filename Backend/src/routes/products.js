@@ -47,6 +47,7 @@ router.delete("/image", auth, async (req, res, next) => {
         try {
             fs.unlinkSync(file);
             console.log(file, " is deleted.");
+            res.send(imageName);
         } catch (error) {
             next(error);
         }
