@@ -46,7 +46,6 @@ router.post("/", auth, async (req, res, next) => {
     uploadImagesSequentially(); */
     // --> Promise.all is much more faster, So I decide use Promise.All
     let deleteArr = [];
-    console.log("product router post / before  Promise.all ");
     Promise.all(
         images.map((image) => {
             // extract only imageName without extension like .jpg
@@ -67,8 +66,9 @@ router.post("/", auth, async (req, res, next) => {
         })
     )
         .then((results) => {
-            console.log("Images uploaded successfully");
-            console.log("=================each upload file info=================");
+            // console.log("Images uploaded successfully");
+            // console.log("=================each upload file info=================");
+
             // Log URLs of the uploaded images
             const imageUrl = results.map((result) => result.url);
 
@@ -141,7 +141,7 @@ router.delete("/image", auth, async (req, res, next) => {
     if (fs.existsSync(file)) {
         try {
             fs.unlinkSync(file);
-            console.log(file, " is deleted.");
+            // console.log(file, " is deleted.");
             res.send(imageName);
         } catch (error) {
             next(error);
