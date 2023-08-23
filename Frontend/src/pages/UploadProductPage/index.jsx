@@ -8,7 +8,7 @@ import FileUpload from "../../components/FileUpload";
 
 const continents = [
     { key: 1, value: "Africa" },
-    { key: 2, value: "Eutope" },
+    { key: 2, value: "Europe" },
     { key: 3, value: "Asia" },
     { key: 4, value: "North America" },
     { key: 5, value: "South America" },

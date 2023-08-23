@@ -49,8 +49,8 @@ router.post("/", auth, async (req, res, next) => {
     console.log("product router post / before  Promise.all ");
     Promise.all(
         images.map((image) => {
+            // extract only imageName without extension like .jpg
             const imageName = image.split(".")[0];
-            console.log("imageName => ", imageName);
             image = path.join(__dirname, "../../uploads/" + image);
 
             // put each image into array should be deleted.
@@ -70,7 +70,6 @@ router.post("/", auth, async (req, res, next) => {
             console.log("Images uploaded successfully");
             console.log("=================each upload file info=================");
             // Log URLs of the uploaded images
-            results.forEach((result) => console.log(result));
             const imageUrl = results.map((result) => result.url);
 
             //TODO
@@ -79,7 +78,7 @@ router.post("/", auth, async (req, res, next) => {
         Call the delete method to delete the photos temporarily stored in the local uploads folder.
         */
             req.body.images = [...imageUrl];
-            console.log(req.body);
+            // console.log(req.body);
 
             deleteArr.forEach((file) => {
                 if (fs.existsSync(file)) {
@@ -95,16 +94,32 @@ router.post("/", auth, async (req, res, next) => {
         })
         .catch((error) => {
             console.error("Error uploading images:", error);
+        })
+        .then(() => {
+            const product = new Product(req.body);
+            product.save();
+            return res.sendStatus(201);
+        })
+        .catch((error) => {
+            next(error);
         });
+
+    /****************************************************************************/
+    // I met problem req.body.images didn't changed.
+    // url data was in images but When I checked products db, only filename was in there.
+    // That was because I didn't do chaning...
+    // the process I make product and save it must be in then()...
 
     //When I'm done with todo, need to uncomment it.
     // try {
+    //     console.log(req.body)
     //     const product = new Product(req.body);
     //     product.save();
     //     return res.sendStatus(201);
     // } catch (error) {
     //     next(error);
     // }
+    /****************************************************************************/
 });
 
 router.post("/image", auth, async (req, res, next) => {
