@@ -59,14 +59,28 @@ function UploadProductPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const images = product.images;
+        let formData = new FormData();
+        const config = {
+            // content type should be changed to multipart/form-data
+            header: { "content-type": "multipart/form-data" },
+        };
+        formData.append("images", images);
+
         // to do
         // Create data and send it to the backend.
         // console.log(product);
 
         //const { title, description, price, images, continents } = product;
+        // console.log(product.continents);
+        // console.log(continents);
+        // console.log(continents[product.continents]);
         const body = {
+            formData,
+            config,
             writer: userId,
             ...product,
+            continent: continents[product.continents - 1].value,
         };
 
         try {

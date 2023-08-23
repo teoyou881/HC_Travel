@@ -7,15 +7,15 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-const storage = new CloudinaryStorage({
+const cloudinaryStorage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: "HC_Travel",
-        allowedFormats: ["jpeg", "png", "jpg"],
+        folder: "HC_Travel", // Cloudinary folder where the files will be stored
+        allowedFormats: ["jpeg", "png", "jpg"], // Allowed file formats
     },
 });
 
 module.exports = {
     cloudinary,
-    storage,
+    cloudinaryStorage,
 };

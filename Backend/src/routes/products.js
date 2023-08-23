@@ -46,9 +46,11 @@ router.post("/", auth, async (req, res, next) => {
     uploadImagesSequentially(); */
     // --> Promise.all is much more faster, So I decide use Promise.All
     let deleteArr = [];
+    console.log("product router post / before  Promise.all ");
     Promise.all(
         images.map((image) => {
-            const imageName = image;
+            const imageName = image.split(".")[0];
+            console.log("imageName => ", imageName);
             image = path.join(__dirname, "../../uploads/" + image);
 
             // put each image into array should be deleted.
@@ -68,39 +70,41 @@ router.post("/", auth, async (req, res, next) => {
             console.log("Images uploaded successfully");
             console.log("=================each upload file info=================");
             // Log URLs of the uploaded images
-            results.forEach((result) => {
-                console.log("Public URL:", result.url);
+            results.forEach((result) => console.log(result));
+            const imageUrl = results.map((result) => result.url);
+
+            //TODO
+            /* 
+        Put the fetched URL data into the req.body.images array.
+        Call the delete method to delete the photos temporarily stored in the local uploads folder.
+        */
+            req.body.images = [...imageUrl];
+            console.log(req.body);
+
+            deleteArr.forEach((file) => {
+                if (fs.existsSync(file)) {
+                    try {
+                        fs.unlinkSync(file);
+                        console.log(file, " is deleted.");
+                    } catch (error) {
+                        console.log("deleteArr.forEach", error);
+                        next(error);
+                    }
+                }
             });
         })
         .catch((error) => {
             console.error("Error uploading images:", error);
         });
 
-    //TODO
-    /* 
-        Put the fetched URL data into the req.body.images array.
-        Call the delete method to delete the photos temporarily stored in the local uploads folder.
-    */
-
-    deleteArr.forEach((file) => {
-        if (fs.existsSync(file)) {
-            try {
-                fs.unlinkSync(file);
-                console.log(file, " is deleted.");
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    });
-
     //When I'm done with todo, need to uncomment it.
-    try {
-        const product = new Product(req.body);
-        product.save();
-        return res.sendStatus(201);
-    } catch (error) {
-        next(error);
-    }
+    // try {
+    //     const product = new Product(req.body);
+    //     product.save();
+    //     return res.sendStatus(201);
+    // } catch (error) {
+    //     next(error);
+    // }
 });
 
 router.post("/image", auth, async (req, res, next) => {
@@ -129,23 +133,4 @@ router.delete("/image", auth, async (req, res, next) => {
         }
     }
 });
-
-router.delete("/images", auth, async (req, res, next) => {
-    // console.log("products router delete /image");
-    // console.log(req.query.image);
-    const imageName = req.query.image;
-
-    const file = path.join(__dirname, "../../uploads/" + imageName);
-
-    if (fs.existsSync(file)) {
-        try {
-            fs.unlinkSync(file);
-            console.log(file, " is deleted.");
-            res.send(imageName);
-        } catch (error) {
-            next(error);
-        }
-    }
-});
-
 module.exports = router;
