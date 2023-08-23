@@ -148,4 +148,8 @@ router.delete("/image", auth, async (req, res, next) => {
         }
     }
 });
+
+router.get("/", auth, async (req, res, next) => {
+    console.log("product router get /");
+});
 module.exports = router;

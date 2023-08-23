@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckBox from "./Sections/CheckBox";
 import RadioBox from "./Sections/RadioBox";
 import SearchInput from "./Sections/SearchInput";
 import CardItem from "./Sections/CardItem";
+import { registerUser } from "./../../store/thunkFunctions";
+import axiosInstance from "../../utills/axios";
 
 const LandingPage = () => {
     const limit = 4;
@@ -13,6 +15,32 @@ const LandingPage = () => {
         continents: [],
         price: [],
     });
+
+    useEffect(() => {
+        fetchProducts({ skip, limit });
+    }, []);
+
+    const fetchProducts = async ({
+        skip,
+        limit,
+        loadMore = false,
+        filters = {},
+        searchTerm = "",
+    }) => {
+        const params = {
+            skip,
+            limit,
+            filters,
+            searchTerm,
+        };
+
+        try {
+            const response = await axiosInstance.get("/products", { params });
+            setProducts(response.data.products);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
@@ -37,7 +65,7 @@ const LandingPage = () => {
                 </div>
 
                 {/* todo -> card */}
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-6 md:grid-cols-4">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                     {products.map((product) => (
                         <CardItem product={product} key={product._id} />
                     ))}
