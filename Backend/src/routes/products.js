@@ -84,7 +84,7 @@ router.post("/", auth, async (req, res, next) => {
                 if (fs.existsSync(file)) {
                     try {
                         fs.unlinkSync(file);
-                        console.log(file, " is deleted.");
+                        // console.log(file, " is deleted.");
                     } catch (error) {
                         console.log("deleteArr.forEach", error);
                         next(error);
@@ -149,7 +149,14 @@ router.delete("/image", auth, async (req, res, next) => {
     }
 });
 
-router.get("/", auth, async (req, res, next) => {
-    console.log("product router get /");
+router.get("/", async (req, res, next) => {
+    try {
+        const products = await Product.find().populate("writer");
+        return res.status(200).json({
+            products,
+        });
+    } catch (error) {
+        next(error);
+    }
 });
 module.exports = router;

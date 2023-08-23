@@ -25,7 +25,7 @@ function UploadProductPage() {
         images: [],
     });
 
-    const userId = useSelector((state) => state.user?.userData._id);
+    const userId = useSelector((state) => state.user?.userData._id || state.user?.userData.id);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -85,7 +85,7 @@ function UploadProductPage() {
 
         try {
             const result = await axiosInstance.post("/products", body);
-            console.log("uploadProductPage handleSubmit ==>  ", result);
+            //console.log("uploadProductPage handleSubmit ==>  ", result);
             navigate("/");
         } catch (error) {
             console.log(error);

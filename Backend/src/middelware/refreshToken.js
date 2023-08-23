@@ -29,7 +29,7 @@ let refreshToken = async (req, res, next) => {
             const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
                 expiresIn: "1h",
                 issuer: "HC",
-                audience: payload.userId,
+                audience: user.email,
             });
 
             req.user = user;
