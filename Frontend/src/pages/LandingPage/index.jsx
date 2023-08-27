@@ -3,7 +3,6 @@ import CheckBox from "./Sections/CheckBox";
 import RadioBox from "./Sections/RadioBox";
 import SearchInput from "./Sections/SearchInput";
 import CardItem from "./Sections/CardItem";
-import { registerUser } from "./../../store/thunkFunctions";
 import axiosInstance from "../../utills/axios";
 import { continents } from "../../utills/filterData";
 
@@ -59,7 +58,23 @@ const LandingPage = () => {
         setSkip(skip);
     };
 
-    const handleFilters = () => {};
+    const handleFilters = (newFilteredData, category) => {
+        const newFilters = { ...filters };
+        newFilters[category] = newFilteredData;
+
+        showFilteredResults(newFilters);
+        setFilters(newFilters);
+    };
+
+    const showFilteredResults = (filters) => {
+        const body = {
+            skip: 0,
+            limit,
+            filters,
+        };
+        fetchProducts(body);
+        setSkip(0);
+    };
 
     return (
         <>
@@ -73,7 +88,7 @@ const LandingPage = () => {
                     <div className="w-1/2">
                         <CheckBox
                             continents={continents}
-                            checkContinents={filters.continents}
+                            checkedContinents={filters.continents}
                             onFilters={(filters) => handleFilters(filters, "continents")}
                         />
                     </div>
