@@ -5,6 +5,7 @@ import SearchInput from "./Sections/SearchInput";
 import CardItem from "./Sections/CardItem";
 import { registerUser } from "./../../store/thunkFunctions";
 import axiosInstance from "../../utills/axios";
+import { continents } from "../../utills/filterData";
 
 const LandingPage = () => {
     const limit = 4;
@@ -58,6 +59,8 @@ const LandingPage = () => {
         setSkip(skip);
     };
 
+    const handleFilters = () => {};
+
     return (
         <>
             <section>
@@ -68,7 +71,11 @@ const LandingPage = () => {
                 {/* todo -> filter */}
                 <div className="flex gap-3">
                     <div className="w-1/2">
-                        <CheckBox />
+                        <CheckBox
+                            continents={continents}
+                            checkContinents={filters.continents}
+                            onFilters={(filters) => handleFilters(filters, "continents")}
+                        />
                     </div>
                     <div className="w-1/2">
                         <RadioBox />
