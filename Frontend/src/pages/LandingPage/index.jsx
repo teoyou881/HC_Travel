@@ -8,6 +8,7 @@ import { continents, prices } from "../../utills/filterData";
 
 const LandingPage = () => {
     const limit = 4;
+    const [searchTerm, setSearchTerm] = useState("");
     const [products, setProducts] = useState([]);
     const [skip, setSkip] = useState(0);
     const [hasMore, setHasMore] = useState(false);
@@ -92,11 +93,28 @@ const LandingPage = () => {
         setSkip(0);
     };
 
+    const handleSearchTerm = (e) => {
+        const body = {
+            skip: 0,
+            limit,
+            filters,
+            searchTerm: e.target.value,
+        };
+        setSkip(0);
+        setSearchTerm(e.target.value);
+        fetchProducts(body);
+    };
+
     return (
         <>
             <section>
                 <div className="text-center m-7">
                     <h2 className="text-2xl"> HC Travel </h2>
+                </div>
+
+                {/* todo -> search */}
+                <div className="flex justify-end  mb-3  ">
+                    <SearchInput searchTerm={searchTerm} onSearch={handleSearchTerm} />
                 </div>
 
                 {/* todo -> filter */}
@@ -115,11 +133,6 @@ const LandingPage = () => {
                             onFilters={(filters) => handleFilters(filters, "price")}
                         />
                     </div>
-                </div>
-
-                {/* todo -> search */}
-                <div>
-                    <SearchInput className="flex justify-end" />
                 </div>
 
                 {/* todo -> card */}

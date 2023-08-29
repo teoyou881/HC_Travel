@@ -173,7 +173,7 @@ router.get("/", async (req, res, next) => {
             }
         }
     }
-    console.log(findArgs);
+    // console.log(findArgs);
     try {
         const products = await Product.find(findArgs)
             .populate("writer")

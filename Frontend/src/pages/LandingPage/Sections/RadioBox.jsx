@@ -1,7 +1,6 @@
 import React from "react";
 
 const RadioBox = ({ prices, checkedPrice, onFilters }) => {
-    console.log(checkedPrice);
     return (
         <div className="p-2 mb-3 bg-gray-100 rounded-md">
             {prices?.map((price) => (
