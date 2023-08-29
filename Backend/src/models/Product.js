@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const ProductSchma = mongoose.Schema({
+const ProductSchema = mongoose.Schema({
     // References the user ID value.
     // The user's id value is ObjectId('~~~~').
     writer: {
@@ -37,5 +37,5 @@ const ProductSchma = mongoose.Schema({
     },
 });
 
-const Product = mongoose.model("Product", ProductSchma);
+const Product = mongoose.model("Product", ProductSchema);
 module.exports = Product;
