@@ -179,7 +179,7 @@ router.get("/", async (req, res, next) => {
         findArgs["$text"] = { $search: term };
     }
 
-    console.log(findArgs);
+    // console.log(findArgs);
     try {
         const products = await Product.find(findArgs)
             .populate("writer")
@@ -195,6 +195,21 @@ router.get("/", async (req, res, next) => {
             products,
             hasMore,
         });
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get("/:id", async (req, res, next) => {
+    const type = req.query.type;
+    let productIds = req.params.id;
+
+    // use productIds to get product info hvaing the same id as productIds from DB
+    try {
+        // https://www.mongodb.com/docs/manual/reference/operator/query/in/
+        // how to use $in
+        const product = await Product.find({ _id: { $in: productIds } }).populate("writer");
+        return res.status(200).send(product);
     } catch (error) {
         next(error);
     }
