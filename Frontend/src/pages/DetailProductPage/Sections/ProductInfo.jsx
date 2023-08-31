@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { addToCart } from "../../../store/thunkFunctions";
 
 const ProductInfo = ({ product }) => {
     const dispatch = useDispatch();

@@ -84,4 +84,55 @@ router.post("/logout", auth, async (req, res, next) => {
     }
 });
 
+router.post("/cart", auth, async (req, res, next) => {
+    console.log("user router /cart");
+    try {
+        // Get the user's information in the user collection
+        const userInfo = await User.findOne({ _id: req.user._id });
+
+        // Check the info to see if the cart already contains the product that I have to save
+        let duplicate = false;
+        userInfo.cart.forEach((item) => {
+            if (item.id === req.body.productId) {
+                duplicate = true;
+            }
+        });
+
+        // In cart, there is already the product
+        if (duplicate) {
+            const user = await User.findOneAndUpdate(
+                //find
+                { _id: req.user._id, "cart.id": req.body.productId },
+                //update
+                { $inc: { "cart.$.quantity": 1 } },
+                //option
+                // new: true --> Returns the updated user.
+                { new: true }
+            );
+
+            return res.status(201).send(user.cart);
+        }
+
+        // In cart, there is no product that I want to save
+        else {
+            const user = await User.findOneAndUpdate(
+                { _id: req.user._id },
+                {
+                    $push: {
+                        cart: {
+                            id: req.body.productId,
+                            quantity: 1,
+                            date: Date.now(),
+                        },
+                    },
+                },
+                { new: true }
+            );
+            return res.status(201).send(user.cart);
+        }
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = router;
