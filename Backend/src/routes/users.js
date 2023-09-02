@@ -85,7 +85,6 @@ router.post("/logout", auth, async (req, res, next) => {
 });
 
 router.post("/cart", auth, async (req, res, next) => {
-    console.log("user router /cart");
     try {
         // Get the user's information in the user collection
         const userInfo = await User.findOne({ _id: req.user._id });

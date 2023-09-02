@@ -47,7 +47,9 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async (_, thunkAPI
 
 export const addToCart = createAsyncThunk("user/addToCart", async (body, thunkAPI) => {
     try {
+        console.log("before axios");
         const response = await axiosInstance.post(`/users/cart`, body);
+        console.log("after axios");
         return response.data;
     } catch (error) {
         console.log(error);

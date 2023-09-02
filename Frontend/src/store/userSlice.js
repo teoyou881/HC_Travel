@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, loginUser, authUser, logoutUser } from "./thunkFunctions";
+import { registerUser, loginUser, authUser, logoutUser, addToCart } from "./thunkFunctions";
 import { toast } from "react-toastify";
 import localStorage from "redux-persist/es/storage";
 
@@ -84,6 +84,23 @@ const userSlice = createSlice({
                 localStorage.removeItem("accessToken");
             })
             .addCase(logoutUser.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+                state.isAuth = false;
+                toast.error(action.payload);
+            })
+            .addCase(addToCart.pending, (state) => {
+                console.log("pending");
+                state.isLoading = true;
+            })
+            .addCase(addToCart.fulfilled, (state, action) => {
+                console.log("fulfilled");
+                state.isLoading = false;
+                state.userData.cart = action.payload;
+                toast.info("product is added to cart");
+            })
+            .addCase(addToCart.rejected, (state, action) => {
+                console.log("recjeted");
                 state.isLoading = false;
                 state.error = action.payload;
                 state.isAuth = false;
