@@ -62,7 +62,7 @@ router.post("/login", async (req, res, next) => {
 
 router.get("/auth", auth, async (req, res, next) => {
     const user = {
-        id: req.user._id,
+        _id: req.user._id,
         email: req.user.email,
         name: req.user.name,
         role: req.user.role,

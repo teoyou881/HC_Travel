@@ -204,6 +204,12 @@ router.get("/:id", async (req, res, next) => {
     const type = req.query.type;
     let productIds = req.params.id;
 
+    if (type === "array") {
+        // id=15123,12512 ==> Ids=['21412312','1231241','1246544'] like that
+        let ids = productIds.split(",");
+        productIds = ids.map((item) => item);
+    }
+
     // use productIds to get product info hvaing the same id as productIds from DB
     try {
         // https://www.mongodb.com/docs/manual/reference/operator/query/in/

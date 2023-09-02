@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, loginUser, authUser, logoutUser, addToCart } from "./thunkFunctions";
+import {
+    registerUser,
+    loginUser,
+    authUser,
+    logoutUser,
+    addToCart,
+    getCartItems,
+} from "./thunkFunctions";
 import { toast } from "react-toastify";
 import localStorage from "redux-persist/es/storage";
 
@@ -90,21 +97,33 @@ const userSlice = createSlice({
                 toast.error(action.payload);
             })
             .addCase(addToCart.pending, (state) => {
-                console.log("pending");
+                // console.log("pending");
                 state.isLoading = true;
             })
             .addCase(addToCart.fulfilled, (state, action) => {
-                console.log("fulfilled");
+                // console.log("fulfilled");
                 state.isLoading = false;
                 state.userData.cart = action.payload;
                 toast.info("product is added to cart");
             })
             .addCase(addToCart.rejected, (state, action) => {
-                console.log("recjeted");
+                // console.log("recjeted");
                 state.isLoading = false;
                 state.error = action.payload;
                 state.isAuth = false;
                 toast.error(action.payload);
+            })
+            .addCase(getCartItems.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getCartItems.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.cartDetail = action.payload;
+            })
+            .addCase(getCartItems.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+                state.isAuth = false;
             });
     },
 });
