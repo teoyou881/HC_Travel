@@ -87,15 +87,16 @@ export const removeCartItem = createAsyncThunk(
     async (productId, thunkAPI) => {
         try {
             const response = await axiosInstance.delete(`/users/cart?productId=${productId}`);
-            response.data.cart.forEach((item) => {
-                response.data.productInfo.forEach((product, index) => {
-                    if (item.id === product._id) {
-                        response.data.productInfo[index].quantity = item.quantity;
-                    }
-                });
-            });
+            console.log(response);
+            // response.data.cart.forEach((item) => {
+            //     response.data.productInfo.forEach((product, index) => {
+            //         if (item.id === product._id) {
+            //             response.data.productInfo[index].quantity = item.quantity;
+            //         }
+            //     });
+            // });
 
-            return response.data;
+            // return response.data;
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
