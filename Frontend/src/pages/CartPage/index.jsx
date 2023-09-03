@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from "../../store/thunkFunctions";
+import { getCartItems, removeCartItem } from "../../store/thunkFunctions";
 import CartTable from "./Sections/CartTable";
 
 function CartPage() {
@@ -37,7 +37,10 @@ function CartPage() {
 
     const handlePaymentClick = () => {};
 
-    const handleRemoveCartItem = () => {};
+    // have to delete in both db and redux store.
+    const handleRemoveCartItem = (productId) => {
+        dispatch(removeCartItem(productId));
+    };
 
     return (
         <section>
