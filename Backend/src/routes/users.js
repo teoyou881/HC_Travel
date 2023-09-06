@@ -137,22 +137,19 @@ router.post("/cart", auth, async (req, res, next) => {
 
 router.delete("/cart", auth, async (req, res, next) => {
     try {
-        await User,
-            findOneAndUpdate(
-                { _id: req.user._id },
-                // use $pull to delete data in mongoDB
-                { $pull: { cart: { id: req.query.productId } } },
-                // get updated data
-                { new: true }
-            );
+        const userInfo = await User.findOneAndUpdate(
+            { _id: req.user._id },
+            // use $pull to delete data in mongoDB
+            { $pull: { cart: { id: req.query.productId } } },
+            // get updated data
+            { new: true }
+        );
         const cart = userInfo.cart;
         const array = cart.map((item) => {
             return item.id;
         });
         // get all products that matches all id in array
         const productInfo = await Product.find({ _id: { $in: array } }).populate("writer");
-
-        console.log(productInfo);
         return res.json({
             productInfo,
             cart,

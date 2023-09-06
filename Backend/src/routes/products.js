@@ -95,6 +95,12 @@ router.post("/", auth, async (req, res, next) => {
         .catch((error) => {
             console.error("Error uploading images:", error);
         })
+        /****************************************************************************/
+        // I met problem req.body.images didn't changed.
+        // url data was in images but When I checked products db, only filename was in there.
+        // That was because I didn't do chaning...
+        // the process I make product and save it must be in then()...
+        /****************************************************************************/
         .then(() => {
             const product = new Product(req.body);
             product.save();
@@ -103,23 +109,6 @@ router.post("/", auth, async (req, res, next) => {
         .catch((error) => {
             next(error);
         });
-
-    /****************************************************************************/
-    // I met problem req.body.images didn't changed.
-    // url data was in images but When I checked products db, only filename was in there.
-    // That was because I didn't do chaning...
-    // the process I make product and save it must be in then()...
-
-    //When I'm done with todo, need to uncomment it.
-    // try {
-    //     console.log(req.body)
-    //     const product = new Product(req.body);
-    //     product.save();
-    //     return res.sendStatus(201);
-    // } catch (error) {
-    //     next(error);
-    // }
-    /****************************************************************************/
 });
 
 router.post("/image", auth, async (req, res, next) => {

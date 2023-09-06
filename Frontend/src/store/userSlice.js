@@ -6,6 +6,7 @@ import {
     logoutUser,
     addToCart,
     getCartItems,
+    removeCartItem,
 } from "./thunkFunctions";
 import { toast } from "react-toastify";
 import localStorage from "redux-persist/es/storage";
@@ -121,6 +122,20 @@ const userSlice = createSlice({
                 state.cartDetail = action.payload;
             })
             .addCase(getCartItems.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+                state.isAuth = false;
+            })
+            .addCase(removeCartItem.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(removeCartItem.fulfilled, (state, action) => {
+                state.isLoading = false;
+                console.log(action.payload);
+                state.userData.cart = action.payload.cart;
+                state.cartDetail = action.payload.productInfo;
+            })
+            .addCase(removeCartItem.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
                 state.isAuth = false;

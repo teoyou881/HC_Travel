@@ -4,7 +4,7 @@ import LoginPage from "./pages/LoginPage/index";
 import RegisterPage from "./pages/RegisterPage/index";
 import LandingPage from "./pages/LandingPage/index";
 import NotAuthRoutes from "./components/NotAuthRoutes";
-import ProtectedRoutes from "./components/ProtectedRoutes";
+import AuthRoutes from "./components/AuthRoutes";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import { ToastContainer } from "react-toastify";
@@ -52,7 +52,7 @@ function App() {
                 <Route index element={<LandingPage />}></Route>
 
                 {/* ex */}
-                <Route element={<ProtectedRoutes isAuth={isAuth} />}>
+                <Route element={<AuthRoutes isAuth={isAuth} />}>
                     <Route path="protected" element={<ProtectedPage />} />
                     <Route path="/product/upload" element={<UploadProductPage />} />
                     <Route path="/product/:productId" element={<DetailProductPage />} />
@@ -66,7 +66,7 @@ function App() {
                     <Route path="/register" element={<RegisterPage />}></Route>
                 </Route>
 
-                {/* Paths that only signed-in people can take */}
+                {/* Paths that only signed-in people like manager can take */}
                 {/* todo */}
                 {/* <Route element={<ProtectedRoutes/>}>
                     <Route path='/product/upload' element={<UploadProductPage/>}/>

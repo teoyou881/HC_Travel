@@ -34,6 +34,7 @@ let refreshToken = async (req, res, next) => {
 
             req.user = user;
             req.accessToken = accessToken;
+            console.log("get new refreshToek");
             next();
         }
     } catch (error) {

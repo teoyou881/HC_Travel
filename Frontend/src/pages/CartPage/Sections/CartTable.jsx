@@ -22,6 +22,7 @@ const CartTable = ({ products, onRemoveItem }) => {
                         alt="product"
                     />
                 </td>
+                <td>{product.title}</td>
                 <td>{product.quantity}</td>
                 <td>{product.price} $</td>
                 <td>
@@ -35,6 +36,7 @@ const CartTable = ({ products, onRemoveItem }) => {
             <thead className=" border-[1px]">
                 <tr>
                     <th>Imgae</th>
+                    <th>Title</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Delete</th>

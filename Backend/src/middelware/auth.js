@@ -34,7 +34,7 @@ let auth = async (req, res, next) => {
         // }
         // req.user = user;
         // console.log("sdfghoussbdogbo");
-        console.log(error);
+        console.log("jwt expired ==> check refreshToken");
         if (error instanceof jwt.TokenExpiredError || error instanceof jwt.JsonWebTokenError) {
             const de = jwt.decode(token);
             req.userId = de.userId;

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "./../utills/axios";
+import ProductInfo from "./../pages/DetailProductPage/Sections/ProductInfo";
 
 export const registerUser = createAsyncThunk("user/registerUser", async (body, thunkAPI) => {
     try {
@@ -87,16 +88,15 @@ export const removeCartItem = createAsyncThunk(
     async (productId, thunkAPI) => {
         try {
             const response = await axiosInstance.delete(`/users/cart?productId=${productId}`);
-            console.log(response);
-            // response.data.cart.forEach((item) => {
-            //     response.data.productInfo.forEach((product, index) => {
-            //         if (item.id === product._id) {
-            //             response.data.productInfo[index].quantity = item.quantity;
-            //         }
-            //     });
-            // });
+            response.data.cart.forEach((cartItem) => {
+                response.data.productInfo.forEach((productDetail, index) => {
+                    if (cartItem.id === productDetail._id) {
+                        response.data.productInfo[index].quantity = cartItem.quantity;
+                    }
+                });
+            });
 
-            // return response.data;
+            return response.data;
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
