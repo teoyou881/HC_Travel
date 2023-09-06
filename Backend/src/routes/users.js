@@ -4,6 +4,8 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const auth = require("../middelware/auth");
 const Product = require("../models/Product");
+const crypto = require("crypto");
+const Payment = require("../models/Payment");
 
 router.post("/register", async (req, res, next) => {
     try {
@@ -157,6 +159,85 @@ router.delete("/cart", auth, async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+router.post("/payment", auth, async (req, res, next) => {
+    // Put simple payment info into history field in user collection
+    let history = [];
+    let transactionData = {};
+
+    req.body.cartDetail.forEach((item) => {
+        history.push({
+            // International standard
+            dateOfPurchase: new Date().toISOString(),
+            name: item.title,
+            id: item._id,
+            price: item.price,
+            quantity: item.quantity,
+            paymentId: crypto.randomUUID(),
+        });
+    });
+
+    // Put simple payment info into history field in user collection
+    transactionData.user = {
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+    };
+
+    transactionData.product = history;
+
+    // user collection
+    /* why should use $each
+        => if do not use, history enters the history document, once again wrapped in an array.
+        ex) history[array[his,his,his,his]]
+        => If use, ex) history[his,his,his]
+        */
+    await User.findOneAndUpdate(
+        { _id: req.user._id },
+        { $push: { history: { $each: history } }, $set: { cart: [] } },
+        {}
+    );
+
+    //payment collection
+    const payment = new Payment(transactionData);
+    const paymentDocs = await payment.save();
+
+    console.log(paymentDocs);
+
+    //   {
+    //     user: {
+    //       id: new ObjectId("64f57e1f9c94091bd05b7b7d"),
+    //       name: '31412523',
+    //       email: 'test@test.com'
+    //     },
+    //     data: [],
+    //     product: [
+    //       {
+    //         dateOfPurchase: '2023-09-06T22:39:58.140Z',
+    //         name: '2',
+    //         id: '64f6576d29e34ffa35452bf4',
+    //         price: 4213,
+    //         quantity: 4,
+    //         paymentId: 'cf983a11-fee5-4a23-8e40-127e5b93301f'
+    //       },
+    //       {
+    //         dateOfPurchase: '2023-09-06T22:39:58.140Z',
+    //         name: 'Aus',
+    //         id: '64f6580429e34ffa35452c1a',
+    //         price: 1699,
+    //         quantity: 2,
+    //         paymentId: 'ce571e8d-8d63-441e-a6ab-14877a054ea0'
+    //       }
+    //     ],
+    //     _id: new ObjectId("64f8ffbe44dc8a8ebe8df57a"),
+    //     createdAt: 2023-09-06T22:39:58.235Z,
+    //     updatedAt: 2023-09-06T22:39:58.235Z,
+    //     __v: 0
+    //   }
+
+    // Todo
+    // increase quantity by the number of items sold
 });
 
 module.exports = router;
