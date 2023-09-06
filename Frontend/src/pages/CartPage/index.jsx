@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartItems, removeCartItem } from "../../store/thunkFunctions";
 import CartTable from "./Sections/CartTable";
@@ -8,6 +8,15 @@ function CartPage() {
     const userData = useSelector((state) => state.user?.userData);
     const cartDetail = useSelector((state) => state.user?.cartDetail);
     const [total, setTotal] = useState(0);
+
+    const calculateTotal = useCallback(
+        (cartDetail) => {
+            let totalPrice = 0;
+            cartDetail.map((product) => (totalPrice += product.price * product.quantity));
+            setTotal(totalPrice);
+        },
+        [total]
+    );
 
     useEffect(() => {
         let cartItemIds = [];
@@ -27,13 +36,9 @@ function CartPage() {
         }
     }, [dispatch, userData]);
 
-    useEffect(() => {}, [cartDetail]);
-
-    const calculateTotal = (cartProducts) => {
-        let totalPrice = 0;
-        cartProducts.map((product) => (totalPrice += product.price * product));
-        setTotal(total);
-    };
+    useEffect(() => {
+        calculateTotal(cartDetail);
+    }, [cartDetail, calculateTotal]);
 
     const handlePaymentClick = () => {};
 

@@ -105,7 +105,7 @@ const userSlice = createSlice({
                 // console.log("fulfilled");
                 state.isLoading = false;
                 state.userData.cart = action.payload;
-                toast.info("product is added to cart");
+                toast.info("Item is added to cart");
             })
             .addCase(addToCart.rejected, (state, action) => {
                 // console.log("recjeted");
@@ -124,7 +124,6 @@ const userSlice = createSlice({
             .addCase(getCartItems.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
-                state.isAuth = false;
             })
             .addCase(removeCartItem.pending, (state) => {
                 state.isLoading = true;
@@ -134,11 +133,11 @@ const userSlice = createSlice({
                 console.log(action.payload);
                 state.userData.cart = action.payload.cart;
                 state.cartDetail = action.payload.productInfo;
+                toast.info("Item is deleted");
             })
             .addCase(removeCartItem.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
-                state.isAuth = false;
             });
     },
 });
