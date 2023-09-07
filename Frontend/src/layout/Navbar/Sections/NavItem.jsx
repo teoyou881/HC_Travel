@@ -22,6 +22,7 @@ const liCss = "py-2 text-center border-b-4 cursor-pointer";
 
 function NavItem({ mobile }) {
     const isAuth = useSelector((state) => state.user?.isAuth);
+    const cart = useSelector((state) => state.user.userData?.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleLogout = () => {
@@ -52,7 +53,7 @@ function NavItem({ mobile }) {
                             <Link to={to}>
                                 {icon}
                                 <span className="absolute top-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -right-3">
-                                    {2}
+                                    {cart.length}
                                 </span>
                             </Link>
                         </li>
