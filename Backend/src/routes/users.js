@@ -6,6 +6,7 @@ const auth = require("../middelware/auth");
 const Product = require("../models/Product");
 const crypto = require("crypto");
 const Payment = require("../models/Payment");
+const async = require("async");
 
 router.post("/register", async (req, res, next) => {
     try {
@@ -238,6 +239,28 @@ router.post("/payment", auth, async (req, res, next) => {
 
     // Todo
     // increase quantity by the number of items sold
+    let products = [];
+
+    paymentDocs.product.forEach((item) => {
+        products.push({ id: item.id, quantity: item.quantity });
+    });
+
+    async.eachSeries(
+        products,
+        async (item) => {
+            await Product.updateOne(
+                { _id: item.id },
+                {
+                    $inc: {
+                        sold: item.quantity,
+                    },
+                }
+            );
+        },
+        (error) => {
+            if (error) return res.status(500).send(error);
+        }
+    );
 });
 
 module.exports = router;
