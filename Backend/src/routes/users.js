@@ -204,8 +204,7 @@ router.post("/payment", auth, async (req, res, next) => {
     const payment = new Payment(transactionData);
     const paymentDocs = await payment.save();
 
-    console.log(paymentDocs);
-
+    // console.log(paymentDocs);
     //   {
     //     user: {
     //       id: new ObjectId("64f57e1f9c94091bd05b7b7d"),
@@ -259,6 +258,7 @@ router.post("/payment", auth, async (req, res, next) => {
         },
         (error) => {
             if (error) return res.status(500).send(error);
+            return res.sendStatus(200);
         }
     );
 });
