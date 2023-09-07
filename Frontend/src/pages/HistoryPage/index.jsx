@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import dayjs from "dayjs";
 
 function HistoryPage() {
     const userData = useSelector((state) => state.user?.userData);
-    console.log(userData);
 
     return (
         <section>
@@ -21,11 +21,11 @@ function HistoryPage() {
                 </thead>
                 <tbody>
                     {userData?.history.map((item) => (
-                        <tr className="border-b " key={item.id}>
+                        <tr className="border-b " key={item.paymentId}>
                             <td>{item.id}</td>
                             <td>{item.price}</td>
                             <td>{item.quantity}</td>
-                            <td>{item.dateOfPurchase}</td>
+                            <td>{dayjs(item.dateOfPurchase).format("YYYY/MM/DD_HH-mm-ss")}</td>
                         </tr>
                     ))}
                 </tbody>
