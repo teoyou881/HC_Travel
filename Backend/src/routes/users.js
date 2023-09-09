@@ -107,7 +107,7 @@ router.post("/cart", auth, async (req, res, next) => {
                 //find
                 { _id: req.user._id, "cart.id": req.body.productId },
                 //update
-                { $inc: { "cart.$.quantity": 1 } },
+                { $inc: { "cart.$.quantity": req.body.quantity } },
                 //option
                 // new: true --> Returns the updated user.
                 { new: true }
@@ -124,7 +124,7 @@ router.post("/cart", auth, async (req, res, next) => {
                     $push: {
                         cart: {
                             id: req.body.productId,
-                            quantity: 1,
+                            quantity: req.body.quantity,
                             date: Date.now(),
                         },
                     },

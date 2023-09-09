@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../store/thunkFunctions";
+import { AiFillFilter } from "react-icons/ai";
 
 let MAX = 10;
 
 const ProductInfo = ({ product }) => {
     const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(1);
 
     const handleClick = () => {
-        dispatch(addToCart({ productId: product._id }));
+        dispatch(addToCart({ productId: product._id, quantity }));
     };
 
     const makeOption = () => {
         let result = [];
         for (let i = 1; i < 11; i++) {
-            result.push(<option>{i}</option>);
+            result.push(<option key={i}>{i}</option>);
         }
         return result;
+    };
+
+    const handleOption = (e) => {
+        // alert(e.target.value);
+        setQuantity(e.target.value);
     };
 
     return (
@@ -40,7 +47,9 @@ const ProductInfo = ({ product }) => {
 
             <div>
                 <span>Quantity: </span>
-                <select className="border">{makeOption()}</select>
+                <select className="border" onChange={handleOption}>
+                    {makeOption()}
+                </select>
             </div>
 
             <div className="mt-3">
