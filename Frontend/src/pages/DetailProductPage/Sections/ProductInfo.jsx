@@ -2,11 +2,21 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../store/thunkFunctions";
 
+let MAX = 10;
+
 const ProductInfo = ({ product }) => {
     const dispatch = useDispatch();
 
     const handleClick = () => {
         dispatch(addToCart({ productId: product._id }));
+    };
+
+    const makeOption = () => {
+        let result = [];
+        for (let i = 1; i < 11; i++) {
+            result.push(<option>{i}</option>);
+        }
+        return result;
     };
 
     return (
@@ -27,6 +37,11 @@ const ProductInfo = ({ product }) => {
                     {product.description}
                 </li>
             </ul>
+
+            <div>
+                <span>Quantity: </span>
+                <select className="border">{makeOption()}</select>
+            </div>
 
             <div className="mt-3">
                 <button
