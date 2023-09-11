@@ -7,6 +7,21 @@ const CartTable = ({ products, onRemoveItem }) => {
             return image;
         }
     };
+    const makeOption = (quantity) => {
+        let result = [];
+        for (let i = 1; i < 11; i++) {
+            if (i == quantity) {
+                result.push(
+                    <option key={i} value="default">
+                        {i}
+                    </option>
+                );
+            } else {
+                result.push(<option key={i}>{i}</option>);
+            }
+        }
+        return result;
+    };
 
     const renderItems =
         products.length > 0 &&
@@ -26,6 +41,8 @@ const CartTable = ({ products, onRemoveItem }) => {
                 <td>{product.quantity}</td>
                 <td>{product.price} $</td>
                 <td>
+                    <select defaultValue={"default"}>{makeOption(product.quantity)}</select>
+
                     <button onClick={() => onRemoveItem(product._id)}> Delete</button>
                 </td>
             </tr>
