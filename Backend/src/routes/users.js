@@ -105,6 +105,20 @@ router.post("/cart", auth, async (req, res, next) => {
 
         // In cart, there is already the product
         if (duplicate) {
+            // In user cart, user want to update the quantity
+            if (req.body.update === true) {
+                const user = await User.findOneAndUpdate(
+                    //find
+                    { _id: req.user._id, "cart.id": req.body.productId },
+                    //update
+                    { $set: { "cart.$.quantity": num } },
+                    //option
+                    // new: true --> Returns the updated user.
+                    { new: true }
+                );
+
+                return res.status(201).send(user.cart);
+            }
             const user = await User.findOneAndUpdate(
                 //find
                 { _id: req.user._id, "cart.id": req.body.productId },

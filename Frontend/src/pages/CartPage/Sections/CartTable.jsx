@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateCartItem } from "../../../store/thunkFunctions";
+import { addToCart, updateCartItem } from "../../../store/thunkFunctions";
 
 const CartTable = ({ products, onRemoveItem }) => {
     const dispatch = useDispatch();
@@ -31,7 +31,8 @@ const CartTable = ({ products, onRemoveItem }) => {
     };
     const handleQuantityChange = (e) => {
         const quantity = e.target.value;
-        dispatch(updateCartItem({ quantity }));
+        const productId = e.target.id;
+        dispatch(addToCart({ productId, quantity, update: true }));
     };
 
     const renderItems =
@@ -53,7 +54,7 @@ const CartTable = ({ products, onRemoveItem }) => {
                 <td>{product.price} $</td>
                 <td>
                     <select
-                        id="quantitySelect"
+                        id={product._id}
                         value={product.quantity}
                         onChange={handleQuantityChange}>
                         {makeOption(product.quantity)}
