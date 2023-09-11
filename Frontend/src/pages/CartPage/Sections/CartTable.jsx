@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateCartItem } from "../../../store/thunkFunctions";
 
 const CartTable = ({ products, onRemoveItem }) => {
+    const dispatch = useDispatch();
     const renderCartImage = (images) => {
         if (images.length > 0) {
             let image = images[0];
@@ -8,19 +11,27 @@ const CartTable = ({ products, onRemoveItem }) => {
         }
     };
     const makeOption = (quantity) => {
-        let result = [];
+        const result = [];
         for (let i = 1; i < 11; i++) {
-            if (i == quantity) {
+            if (i === Number(quantity)) {
                 result.push(
-                    <option key={i} value="default">
+                    <option key={i} value={i}>
                         {i}
                     </option>
                 );
             } else {
-                result.push(<option key={i}>{i}</option>);
+                result.push(
+                    <option key={i} value={i}>
+                        {i}
+                    </option>
+                );
             }
         }
         return result;
+    };
+    const handleQuantityChange = (e) => {
+        const quantity = e.target.value;
+        dispatch(updateCartItem({ quantity }));
     };
 
     const renderItems =
@@ -41,7 +52,12 @@ const CartTable = ({ products, onRemoveItem }) => {
                 <td>{product.quantity}</td>
                 <td>{product.price} $</td>
                 <td>
-                    <select defaultValue={"default"}>{makeOption(product.quantity)}</select>
+                    <select
+                        id="quantitySelect"
+                        value={product.quantity}
+                        onChange={handleQuantityChange}>
+                        {makeOption(product.quantity)}
+                    </select>
 
                     <button onClick={() => onRemoveItem(product._id)}> Delete</button>
                 </td>

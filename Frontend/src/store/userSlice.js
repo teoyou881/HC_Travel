@@ -8,6 +8,7 @@ import {
     getCartItems,
     removeCartItem,
     payProducts,
+    updateCartItem,
 } from "./thunkFunctions";
 import { toast } from "react-toastify";
 import localStorage from "redux-persist/es/storage";
@@ -149,6 +150,19 @@ const userSlice = createSlice({
                 toast.info("purchased Item successfully");
             })
             .addCase(payProducts.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(updateCartItem.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateCartItem.fulfilled, (state) => {
+                state.isLoading = false;
+                state.userData.cart = [];
+                state.cartDetail = [];
+                toast.info("purchased Item successfully");
+            })
+            .addCase(updateCartItem.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

@@ -89,6 +89,8 @@ router.post("/logout", auth, async (req, res, next) => {
 });
 
 router.post("/cart", auth, async (req, res, next) => {
+    let num = Number(req.body.quantity);
+
     try {
         // Get the user's information in the user collection
         const userInfo = await User.findOne({ _id: req.user._id });
@@ -107,7 +109,7 @@ router.post("/cart", auth, async (req, res, next) => {
                 //find
                 { _id: req.user._id, "cart.id": req.body.productId },
                 //update
-                { $inc: { "cart.$.quantity": req.body.quantity } },
+                { $inc: { "cart.$.quantity": num } },
                 //option
                 // new: true --> Returns the updated user.
                 { new: true }
@@ -124,7 +126,7 @@ router.post("/cart", auth, async (req, res, next) => {
                     $push: {
                         cart: {
                             id: req.body.productId,
-                            quantity: req.body.quantity,
+                            quantity: num,
                             date: Date.now(),
                         },
                     },
@@ -261,6 +263,31 @@ router.post("/payment", auth, async (req, res, next) => {
             return res.sendStatus(200);
         }
     );
+});
+
+router.patch("/cart", auth, async (req, res, next) => {
+    // try {
+    //     const userInfo = await User.findOneAndUpdate(
+    //         { _id: req.user._id },
+    //         // use $pull to delete data in mongoDB
+    //         { $pull: { cart: { id: req.query.productId } } },
+    //         // get updated data
+    //         { new: true }
+    //     );
+    //     const cart = userInfo.cart;
+    //     const array = cart.map((item) => {
+    //         return item.id;
+    //     });
+    //     // get all products that matches all id in array
+    //     const productInfo = await Product.find({ _id: { $in: array } }).populate("writer");
+    //     return res.json({
+    //         productInfo,
+    //         cart,
+    //     });
+    // } catch (error) {
+    //     next(error);
+    // }
+    console.log(req.body);
 });
 
 module.exports = router;

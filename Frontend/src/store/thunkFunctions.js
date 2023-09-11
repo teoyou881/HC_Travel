@@ -113,3 +113,17 @@ export const payProducts = createAsyncThunk("user/payProducts", async (body, thu
         return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
 });
+
+export const updateCartItem = createAsyncThunk(
+    "user/updateCartItem",
+    async (quantity, thunkAPI) => {
+        console.log(quantity);
+        try {
+            const response = await axiosInstance.patch(`/users/cart`, quantity);
+            // return response.data;
+        } catch (error) {
+            console.log(error);
+            // return thunkAPI.rejectWithValue(error.response?.data || error.message);
+        }
+    }
+);
