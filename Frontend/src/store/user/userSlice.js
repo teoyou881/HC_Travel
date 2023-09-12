@@ -9,7 +9,7 @@ import {
     removeCartItem,
     payProducts,
     updateCartItem,
-} from "./thunkFunctions";
+} from "../thunkFunctions";
 import { toast } from "react-toastify";
 import localStorage from "redux-persist/es/storage";
 
@@ -29,7 +29,9 @@ const initialState = {
 const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        registerUserReducer(state, action) {},
+    },
     extraReducers: (builder) => {
         builder
             .addCase(registerUser.pending, (state) => {
@@ -169,4 +171,5 @@ const userSlice = createSlice({
     },
 });
 
+export const userActions = userSlice.actions;
 export default userSlice.reducer;

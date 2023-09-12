@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { registerUser } from "./../../store/thunkFunctions";
 import { useNavigate } from "react-router-dom";
+import { userActions } from "../../store/user/userSlice";
 
 const RegisterPage = () => {
     const {
@@ -20,18 +21,26 @@ const RegisterPage = () => {
     const onSubmit = ({ email, password, name }) => {
         //alert(email);
 
-        const body = {
+        // const body = {
+        //     email,
+        //     password,
+        //     name,
+        //     image: "https://cdn.pixabay.com/photo/2018/01/21/14/16/woman-3096664_1280.jpg",
+        // };
+
+        // dispatch(registerUser(body))
+        // .then(() => {
+        //     navigate("/");
+        // })
+        // .catch(() => reset());
+        // reset();
+        dispatch({
+            type: "REGISTER_USER_SAGA",
             email,
             password,
             name,
             image: "https://cdn.pixabay.com/photo/2018/01/21/14/16/woman-3096664_1280.jpg",
-        };
-
-        dispatch(registerUser(body))
-            .then(() => {
-                navigate("/");
-            })
-            .catch(() => reset());
+        });
         reset();
     };
 

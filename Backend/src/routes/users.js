@@ -13,7 +13,7 @@ router.post("/register", async (req, res, next) => {
         const user = new User(req.body);
 
         await user.save();
-        return res.sendStatus(200);
+        return res.status(200).send({ isSuccess: true });
     } catch (error) {
         next(error);
     }

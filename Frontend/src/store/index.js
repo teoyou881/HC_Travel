@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userReducer from "./userSlice";
+import userReducer from "./user/userSlice";
 import storage from "redux-persist/lib/storage";
 import {
     DEFAULT_VERSION,
@@ -13,12 +13,17 @@ import {
     persistReducer,
     persistStore,
 } from "redux-persist";
+import createSagaMiddleware from "redux-saga";
+import userSaga from "../store/user/saga";
+import { all } from "redux-saga/effects";
 
 // Takes an object with values from different reducing functions and
 // converts them into a single reducing function that can be passed to the createstore.
 export const rootReducer = combineReducers({
     user: userReducer,
 });
+
+const sagaMiddleware = createSagaMiddleware();
 
 // Decide where to store the state in your redux store.
 const persistConfig = {
@@ -30,7 +35,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = configureStore({
+const store = configureStore({
     reducer: persistedReducer,
     // getDefaultMdddleware -> this is the basic middleware redux-toolkit has
     // when using persist, in action, some non-serializable value are passed
@@ -56,7 +61,13 @@ export const store = configureStore({
                     DEFAULT_VERSION,
                 ],
             },
-        }),
+        }).concat(sagaMiddleware),
 });
 
-export const persistor = persistStore(store);
+function* rootSaga() {
+    yield all([userSaga()]);
+}
+
+sagaMiddleware.run(rootSaga);
+const persistor = persistStore(store);
+export { store, persistor };
