@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-    registerUser,
     loginUser,
     authUser,
     logoutUser,
@@ -33,10 +32,12 @@ const userSlice = createSlice({
         setLoading(state, action) {
             state.isLoading = action.isLoading;
         },
+        error(state, action) {
+            state.error = action.error;
+        },
     },
     extraReducers: (builder) => {
         builder
-
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
             })

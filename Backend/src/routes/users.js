@@ -14,6 +14,7 @@ router.post("/register", async (req, res, next) => {
 
         await user.save();
         return res.status(200).send({ isSuccess: true });
+        // return new Error("nskfnkl");
     } catch (error) {
         next(error);
     }

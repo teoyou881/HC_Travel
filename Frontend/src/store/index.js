@@ -25,6 +25,12 @@ export const rootReducer = combineReducers({
 
 const sagaMiddleware = createSagaMiddleware();
 
+// const sagaMiddleware = createSagaMiddleware({
+//     onError: (err) => {
+//         store.dispatch({ type: "ERROR", payload: err });
+//     },
+// });
+
 // Decide where to store the state in your redux store.
 const persistConfig = {
     key: "root", // key 이름

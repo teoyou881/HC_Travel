@@ -17,7 +17,6 @@ const RegisterPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isLoading = useSelector((state) => state.user.isLoading);
-    console.log(isLoading);
 
     const onSubmit = ({ email, password, name }) => {
         //alert(email);
@@ -41,6 +40,7 @@ const RegisterPage = () => {
             password,
             name,
             image: "https://cdn.pixabay.com/photo/2018/01/21/14/16/woman-3096664_1280.jpg",
+            navigate,
         });
         reset();
     };
