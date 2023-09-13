@@ -11,6 +11,7 @@ import {
 } from "../thunkFunctions";
 import { toast } from "react-toastify";
 import localStorage from "redux-persist/es/storage";
+import { setValueReducer } from "../redux-helper";
 
 const initialState = {
     userData: {
@@ -34,6 +35,9 @@ const userSlice = createSlice({
         },
         error(state, action) {
             state.error = action.error;
+        },
+        setValue(state, action) {
+            setValueReducer(state, action);
         },
     },
     extraReducers: (builder) => {

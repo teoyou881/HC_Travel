@@ -1,6 +1,9 @@
+import { createSetValueAction } from "../redux-helper";
+
 export const Types = {
     REGISTER: "user/REGISTERR",
     SET_LOADING: "user/setLoading",
+    SET_VALUE: "user/setValue",
 };
 
 export const actions = {
@@ -9,4 +12,5 @@ export const actions = {
         type: Types.SET_LOADING,
         isLoading,
     }),
+    setValue: createSetValueAction(Types.SET_VALUE),
 };
