@@ -30,22 +30,13 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        registerUserReducer(state, action) {},
+        setLoading(state, action) {
+            state.isLoading = action.isLoading;
+        },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(registerUser.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(registerUser.fulfilled, (state) => {
-                state.isLoading = false;
-                toast.success("success to create an account");
-            })
-            .addCase(registerUser.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-                toast.error(action.payload);
-            })
+
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
             })

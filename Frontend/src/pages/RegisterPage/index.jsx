@@ -1,9 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { registerUser } from "./../../store/thunkFunctions";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userActions } from "../../store/user/userSlice";
+import { Types } from "../../store/user";
 
 const RegisterPage = () => {
     const {
@@ -17,6 +16,8 @@ const RegisterPage = () => {
     } = useForm({ mode: "onChange" });
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isLoading = useSelector((state) => state.user.isLoading);
+    console.log(isLoading);
 
     const onSubmit = ({ email, password, name }) => {
         //alert(email);
@@ -35,7 +36,7 @@ const RegisterPage = () => {
         // .catch(() => reset());
         // reset();
         dispatch({
-            type: "REGISTER_USER_SAGA",
+            type: Types.REGISTER,
             email,
             password,
             name,
@@ -139,6 +140,11 @@ const RegisterPage = () => {
                         </a>
                     </p>{" "}
                 </form>
+                {isLoading && (
+                    <div className="flex justify-center">
+                        <p className="font-bold">Loading...</p>
+                    </div>
+                )}
             </div>
         </section>
     );
