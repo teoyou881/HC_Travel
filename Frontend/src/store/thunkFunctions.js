@@ -51,6 +51,7 @@ export const addToCart = createAsyncThunk("user/addToCart", async (body, thunkAP
         // console.log("before axios");
         const response = await axiosInstance.post(`/users/cart`, body);
         // console.log("after axios");
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);
