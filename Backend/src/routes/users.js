@@ -60,11 +60,7 @@ router.post("/login", async (req, res, next) => {
         //     audience: payload.userId,
         // });
 
-        // todo
-        // get payment document from mongo
-        const payment = await Payment.find({ "user.id": user._id });
-        console.log(payment);
-        return res.json({ user, payment, accessToken });
+        return res.json({ user, accessToken });
     } catch (error) {
         next(error);
     }

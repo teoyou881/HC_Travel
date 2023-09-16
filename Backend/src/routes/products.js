@@ -5,9 +5,11 @@ const Product = require("../models/Product");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const ObjectId = require("mongodb").ObjectId;
 
 // to use cloudinary
 const { cloudinary, cloudinaryStorage } = require("../../uploads");
+const Payment = require("../models/Payment");
 // add public_id to cloudinaryStorage
 // cloudinaryStorage.params.public_id = (req, file) => file.fieldname + "-" + Date.now(); // Generate a unique filename
 // const uploadCloudinary = multer({ storage: cloudinaryStorage }).single("file");
@@ -209,4 +211,34 @@ router.get("/:id", async (req, res, next) => {
         next(error);
     }
 });
+
+// When I put this router down..
+// 'Cast to ObjectId failed for value "history" (type string) at path "_id" for model "Product"'
+// error occured..
+// I found the solution which this router should be above some specific router;
+// ==> error doesn't exsit when I changed route method get to post.
+router.post("/history", async (req, res, next) => {
+    try {
+        //change string to objectId
+        // console.log(req.body);
+        // console.log(req.body);
+        const userId = new ObjectId(req.body.userId);
+        const payments = await Payment.find({ "user.id": userId });
+        const payment = payments.map((payment) => {
+            return {
+                id: payment._id,
+                data: payment.data,
+                product: payment.product,
+                createdDate: payment.createdAt,
+                updatedDate: payment.updatedAt,
+            };
+        });
+        // console.log(payment);
+
+        return res.status(200).send(payment);
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = router;

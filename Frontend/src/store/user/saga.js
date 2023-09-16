@@ -32,6 +32,21 @@ function* regiUserSaga({ email, password, name, image, navigate }) {
     }
 }
 
+function* getHistory({ userId }) {
+    try {
+        yield put(actions.setValue("isLoading", true));
+        const result = yield call(axiosInstance.post, "/products/history", { userId });
+        // console.log(result.data);
+        yield put(actions.setValue("isLoading", false));
+        yield put(actions.setValue("orderHistory", result.data));
+    } catch (error) {
+        yield put(actions.setValue("isLoading", false));
+        toast.error(error.message);
+        yield put({ type: "user/error", error: error.message });
+    }
+}
+
 export default function* () {
     yield takeEvery(Types.REGISTER, regiUserSaga);
+    yield takeEvery(Types.GET_HISTORY, getHistory);
 }
