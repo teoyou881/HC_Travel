@@ -195,6 +195,7 @@ router.post("/payment", auth, async (req, res, next) => {
             id: item._id,
             price: item.price,
             quantity: item.quantity,
+
             paymentId: crypto.randomUUID(),
         });
     });
@@ -204,6 +205,7 @@ router.post("/payment", auth, async (req, res, next) => {
         id: req.user._id,
         name: req.user.name,
         email: req.user.email,
+        image: item[0],
     };
 
     transactionData.product = history;

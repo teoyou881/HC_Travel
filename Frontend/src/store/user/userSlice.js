@@ -104,10 +104,12 @@ const userSlice = createSlice({
             .addCase(addToCart.fulfilled, (state, action) => {
                 // console.log("fulfilled");
                 state.isLoading = false;
-                state.userData.cart = action.payload.cart;
+
                 if (action.payload.update) {
+                    state.userData.cart = action.payload.cart;
                     toast.info("The quantity is changed.");
                 } else {
+                    state.userData.cart = action.payload;
                     toast.info("Item is added to cart");
                 }
             })

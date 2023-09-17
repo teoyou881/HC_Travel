@@ -17,6 +17,7 @@ function* regiUserSaga({ email, password, name, image, navigate }) {
         // yield put(actions.setLoading(false));
         // console.log(result);
 
+        yield navigate("/");
         // if (result.data.isSuccess) {
         //     toast.success("success to create an account");
         //     yield navigate("/");

@@ -13,6 +13,10 @@ const PaymentShema = mongoose.Schema(
             type: Array,
             default: [],
         },
+        image: {
+            type: String,
+            default: "",
+        },
     },
     { timestamps: true }
 );
