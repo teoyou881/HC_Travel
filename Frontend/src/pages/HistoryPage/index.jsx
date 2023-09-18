@@ -5,6 +5,7 @@ import { Types } from "../../store/user";
 function HistoryPage() {
     const userData = useSelector((state) => state.user?.userData);
     const orderHistory = useSelector((state) => state.user.orderHistory);
+    console.log(orderHistory);
     const dispatch = useDispatch();
 
     // const [orderHistory, setorderHistory] = useState({});
@@ -22,17 +23,19 @@ function HistoryPage() {
                         <div key={history.id} className="flex justify-center border-2 p-2 m-2">
                             <div className="w-[920px] h-[330px]">
                                 <div className=" h-[66px] bg-gray-200 ">up</div>
+                                <span className="font-medium text-xl">
+                                    {/* TODO
+                                                convert mongoDB date format to yyyy-mm-dd
+                                                this should be done I think.. before saving it to redux
+                                                that means.. at backside? before sending data to front like saga or thunk */}
+                                    Purchased {history.created.createdMonth}{" "}
+                                    {history.created.createdDay}
+                                    {", "} {history.created.createdYear}
+                                </span>
                                 <div>
                                     {history.product?.map((item) => (
                                         // const orderData = new Date(orderHistory.).toISOString().slice(0, 10);
                                         <div key={item.id} className="mb-2 last:mb-0">
-                                            <span className="font-medium text-xl">
-                                                {/* TODO
-                                                convert mongoDB date format to yyyy-mm-dd
-                                                this should be done I think.. before saving it to redux
-                                                that means.. at backside? before sending data to front like saga or thunk */}
-                                                Delivered{" "}
-                                            </span>
                                             <div className="flex justify-start">
                                                 <div className="w-[100px] h-[90px]">
                                                     {/* TODO

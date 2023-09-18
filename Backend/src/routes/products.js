@@ -1,5 +1,5 @@
 const express = require("express");
-const { getMonthName, removeLeadingZero } = require("../util/changeDateFormat");
+const { changeDateFormat } = require("../util/changeDateFormat");
 const router = express.Router();
 const auth = require("../middelware/auth");
 const Product = require("../models/Product");
@@ -222,9 +222,6 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/history", async (req, res, next) => {
     try {
-        //change string to objectId
-        // console.log(req.body);
-        // console.log(req.body);
         const userId = new ObjectId(req.body.userId);
         const payments = await Payment.find({ "user.id": userId });
         const payment = payments.map((payment) => {
@@ -235,8 +232,8 @@ router.post("/history", async (req, res, next) => {
                 id: payment._id,
                 data: payment.data,
                 product: payment.product,
-                createdDate: { createdYear, createdMonth, createdDay },
-                updatedDate: { updatedYear, updatedMonth, updatedDay },
+                created: { createdYear, createdMonth, createdDay },
+                updated: { updatedYear, updatedMonth, updatedDay },
             };
         });
 
