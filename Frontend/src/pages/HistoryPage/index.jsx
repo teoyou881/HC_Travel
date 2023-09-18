@@ -6,6 +6,7 @@ function HistoryPage() {
     const userData = useSelector((state) => state.user?.userData);
     const orderHistory = useSelector((state) => state.user.orderHistory);
     const dispatch = useDispatch();
+
     // const [orderHistory, setorderHistory] = useState({});
     useEffect(() => {
         dispatch({ type: Types.GET_HISTORY, userId: userData._id });
@@ -22,10 +23,26 @@ function HistoryPage() {
                             <div className="w-[920px] h-[330px]">
                                 <div className=" h-[66px] bg-gray-200 ">up</div>
                                 <div>
-                                    {history.product.map((item) => (
-                                        <div key={item.id}>
-                                            이미지
-                                            <img src=""></img>
+                                    {history.product?.map((item) => (
+                                        // const orderData = new Date(orderHistory.).toISOString().slice(0, 10);
+                                        <div key={item.id} className="mb-2 last:mb-0">
+                                            <span className="font-medium text-xl">
+                                                {/* TODO
+                                                convert mongoDB date format to yyyy-mm-dd
+                                                this should be done I think.. before saving it to redux
+                                                that means.. at backside? before sending data to front like saga or thunk */}
+                                                Delivered{" "}
+                                            </span>
+                                            <div className="flex justify-start">
+                                                <div className="w-[100px] h-[90px]">
+                                                    {/* TODO
+                                                    when clicking image, go to product detail */}
+                                                    <img
+                                                        src={item.image}
+                                                        className="w-[90px] h-[90px]"></img>
+                                                </div>
+                                                <div>description</div>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>

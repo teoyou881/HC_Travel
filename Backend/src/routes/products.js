@@ -1,4 +1,5 @@
 const express = require("express");
+const { getMonthName, removeLeadingZero } = require("../util/monthConvert");
 const router = express.Router();
 const auth = require("../middelware/auth");
 const Product = require("../models/Product");
@@ -10,6 +11,7 @@ const ObjectId = require("mongodb").ObjectId;
 // to use cloudinary
 const { cloudinary, cloudinaryStorage } = require("../../uploads");
 const Payment = require("../models/Payment");
+
 // add public_id to cloudinaryStorage
 // cloudinaryStorage.params.public_id = (req, file) => file.fieldname + "-" + Date.now(); // Generate a unique filename
 // const uploadCloudinary = multer({ storage: cloudinaryStorage }).single("file");
@@ -217,6 +219,7 @@ router.get("/:id", async (req, res, next) => {
 // error occured..
 // I found the solution which this router should be above some specific router;
 // ==> error doesn't exsit when I changed route method get to post.
+
 router.post("/history", async (req, res, next) => {
     try {
         //change string to objectId
@@ -225,6 +228,19 @@ router.post("/history", async (req, res, next) => {
         const userId = new ObjectId(req.body.userId);
         const payments = await Payment.find({ "user.id": userId });
         const payment = payments.map((payment) => {
+            // const month = new Date(payment.createdAt).toISOString().slice(5, 7);
+            // console.log(getMonthName(removeLeadingZero, month));
+
+            payment.createdAt = payment.createdAt.setMonth(payment.createdAt.getMonth());
+            const month = payment.createdAt.toLocaleString("en-CA", { month: "short" });
+            const year = new Date(payment.createdAt).toISOString().slice(0, 4);
+            console.log("year", year);
+            const day = new Date(payment.createdAt).toISOString().slice(8, 10);
+            console.log("day", day);
+
+            // month.setMonth(month) - 1;
+            // month.toLocaleString("en-US", { month: "short" });
+            // console.log(month);
             return {
                 id: payment._id,
                 data: payment.data,
