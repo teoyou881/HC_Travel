@@ -1,5 +1,5 @@
 const express = require("express");
-const { getMonthName, removeLeadingZero } = require("../util/monthConvert");
+const { getMonthName, removeLeadingZero } = require("../util/changeDateFormat");
 const router = express.Router();
 const auth = require("../middelware/auth");
 const Product = require("../models/Product");
@@ -228,28 +228,17 @@ router.post("/history", async (req, res, next) => {
         const userId = new ObjectId(req.body.userId);
         const payments = await Payment.find({ "user.id": userId });
         const payment = payments.map((payment) => {
-            // const month = new Date(payment.createdAt).toISOString().slice(5, 7);
-            // console.log(getMonthName(removeLeadingZero, month));
+            const [createdYear, createdMonth, createdDay] = changeDateFormat(payment.createdAt);
+            const [updatedYear, updatedMonth, updatedDay] = changeDateFormat(payment.updatedAt);
 
-            payment.createdAt = payment.createdAt.setMonth(payment.createdAt.getMonth());
-            const month = payment.createdAt.toLocaleString("en-CA", { month: "short" });
-            const year = new Date(payment.createdAt).toISOString().slice(0, 4);
-            console.log("year", year);
-            const day = new Date(payment.createdAt).toISOString().slice(8, 10);
-            console.log("day", day);
-
-            // month.setMonth(month) - 1;
-            // month.toLocaleString("en-US", { month: "short" });
-            // console.log(month);
             return {
                 id: payment._id,
                 data: payment.data,
                 product: payment.product,
-                createdDate: payment.createdAt,
-                updatedDate: payment.updatedAt,
+                createdDate: { createdYear, createdMonth, createdDay },
+                updatedDate: { updatedYear, updatedMonth, updatedDay },
             };
         });
-        // console.log(payment);
 
         return res.status(200).send(payment);
     } catch (error) {
