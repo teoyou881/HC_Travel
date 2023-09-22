@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const auth = require("../middelware/auth");
-const Product = require("../models/Product");
-const crypto = require("crypto");
-const Payment = require("../models/Payment");
-const async = require("async");
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const auth = require('../middelware/auth');
+const Product = require('../models/Product');
+const crypto = require('crypto');
+const Payment = require('../models/Payment');
+const async = require('async');
 
-router.post("/register", async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
     try {
         const user = new User(req.body);
 
@@ -20,19 +20,19 @@ router.post("/register", async (req, res, next) => {
     }
 });
 
-router.post("/login", async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
     // req.body email, password
     try {
         // check whether user is exist or not
         const user = await User.findOne({ email: req.body.email });
         if (!user) {
-            return res.status(400).send("Auth failed, email not found");
+            return res.status(400).send('Auth failed, email not found');
         }
         // check password is correct
         // must use user not User. use instance of User
         const isMatch = await user.comparePassword(req.body.password);
         if (!isMatch) {
-            return res.status(400).send("Wrong Password");
+            return res.status(400).send('Wrong Password');
         }
 
         const payload = {
@@ -41,13 +41,13 @@ router.post("/login", async (req, res, next) => {
             time: new Date(),
         };
         const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: "1h",
-            issuer: "HC",
+            expiresIn: '1h',
+            issuer: 'HC',
             audience: user.email,
         });
         const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRT, {
-            expiresIn: "7d",
-            issuer: "HC",
+            expiresIn: '7d',
+            issuer: 'HC',
             audience: user.email,
         });
         user.refreshToken = refreshToken;
@@ -66,7 +66,7 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
-router.get("/auth", auth, async (req, res, next) => {
+router.get('/auth', auth, async (req, res, next) => {
     const user = {
         _id: req.user._id,
         email: req.user.email,
@@ -82,7 +82,7 @@ router.get("/auth", auth, async (req, res, next) => {
         accessToken: req.accessToken,
     });
 });
-router.post("/logout", auth, async (req, res, next) => {
+router.post('/logout', auth, async (req, res, next) => {
     try {
         return res.sendStatus(200);
     } catch (error) {
@@ -90,7 +90,7 @@ router.post("/logout", auth, async (req, res, next) => {
     }
 });
 
-router.post("/cart", auth, async (req, res, next) => {
+router.post('/cart', auth, async (req, res, next) => {
     let num = Number(req.body.quantity);
 
     try {
@@ -111,9 +111,9 @@ router.post("/cart", auth, async (req, res, next) => {
             if (req.body.update === true) {
                 const user = await User.findOneAndUpdate(
                     //find
-                    { _id: req.user._id, "cart.id": req.body.productId },
+                    { _id: req.user._id, 'cart.id': req.body.productId },
                     //update
-                    { $set: { "cart.$.quantity": num } },
+                    { $set: { 'cart.$.quantity': num } },
                     //option
                     // new: true --> Returns the updated user.
                     { new: true }
@@ -125,9 +125,9 @@ router.post("/cart", auth, async (req, res, next) => {
 
             const user = await User.findOneAndUpdate(
                 //find
-                { _id: req.user._id, "cart.id": req.body.productId },
+                { _id: req.user._id, 'cart.id': req.body.productId },
                 //update
-                { $inc: { "cart.$.quantity": num } },
+                { $inc: { 'cart.$.quantity': num } },
                 //option
                 // new: true --> Returns the updated user.
                 { new: true }
@@ -158,7 +158,7 @@ router.post("/cart", auth, async (req, res, next) => {
     }
 });
 
-router.delete("/cart", auth, async (req, res, next) => {
+router.delete('/cart', auth, async (req, res, next) => {
     try {
         const userInfo = await User.findOneAndUpdate(
             { _id: req.user._id },
@@ -172,7 +172,7 @@ router.delete("/cart", auth, async (req, res, next) => {
             return item.id;
         });
         // get all products that matches all id in array
-        const productInfo = await Product.find({ _id: { $in: array } }).populate("writer");
+        const productInfo = await Product.find({ _id: { $in: array } }).populate('writer');
         return res.json({
             productInfo,
             cart,
@@ -182,12 +182,14 @@ router.delete("/cart", auth, async (req, res, next) => {
     }
 });
 
-router.post("/payment", auth, async (req, res, next) => {
+router.post('/payment', auth, async (req, res, next) => {
     // Put simple payment info into history field in user collection
     let history = [];
     let transactionData = {};
+    let total = 0;
 
     req.body.cartDetail.forEach((item) => {
+        total += item.price * item.quantity;
         history.push({
             // International standard
             dateOfPurchase: new Date().toISOString(),
@@ -208,6 +210,8 @@ router.post("/payment", auth, async (req, res, next) => {
     };
 
     transactionData.product = history;
+    transactionData.total = total;
+    console.log(transactionData);
 
     // user collection
     /* why should use $each
@@ -284,7 +288,7 @@ router.post("/payment", auth, async (req, res, next) => {
     );
 });
 
-router.patch("/cart", auth, async (req, res, next) => {
+router.patch('/cart', auth, async (req, res, next) => {
     // try {
     //     const userInfo = await User.findOneAndUpdate(
     //         { _id: req.user._id },

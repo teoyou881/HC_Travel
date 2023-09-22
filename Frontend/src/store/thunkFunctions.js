@@ -1,8 +1,8 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "./../utills/axios";
-import ProductInfo from "./../pages/DetailProductPage/Sections/ProductInfo";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axiosInstance from './../utills/axios';
+import ProductInfo from './../pages/DetailProductPage/Sections/ProductInfo';
 
-export const registerUser = createAsyncThunk("user/registerUser", async (body, thunkAPI) => {
+export const registerUser = createAsyncThunk('user/registerUser', async (body, thunkAPI) => {
     try {
         const response = await axiosInstance.post(`/users/register`, body);
 
@@ -14,7 +14,7 @@ export const registerUser = createAsyncThunk("user/registerUser", async (body, t
     }
 });
 
-export const loginUser = createAsyncThunk("user/loginUser", async (body, thunkAPI) => {
+export const loginUser = createAsyncThunk('user/loginUser', async (body, thunkAPI) => {
     try {
         const response = await axiosInstance.post(`/users/login`, body);
         return response.data;
@@ -24,7 +24,7 @@ export const loginUser = createAsyncThunk("user/loginUser", async (body, thunkAP
     }
 });
 
-export const authUser = createAsyncThunk("user/authUser", async (refreshToken, thunkAPI) => {
+export const authUser = createAsyncThunk('user/authUser', async (refreshToken, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`/users/auth`, refreshToken);
 
@@ -36,7 +36,7 @@ export const authUser = createAsyncThunk("user/authUser", async (refreshToken, t
     }
 });
 
-export const logoutUser = createAsyncThunk("user/logoutUser", async (_, thunkAPI) => {
+export const logoutUser = createAsyncThunk('user/logoutUser', async (_, thunkAPI) => {
     try {
         const response = await axiosInstance.post(`/users/logout`);
         return response.data;
@@ -46,7 +46,7 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async (_, thunkAPI
     }
 });
 
-export const addToCart = createAsyncThunk("user/addToCart", async (body, thunkAPI) => {
+export const addToCart = createAsyncThunk('user/addToCart', async (body, thunkAPI) => {
     try {
         // console.log("before axios");
         const response = await axiosInstance.post(`/users/cart`, body);
@@ -60,7 +60,7 @@ export const addToCart = createAsyncThunk("user/addToCart", async (body, thunkAP
 });
 
 export const getCartItems = createAsyncThunk(
-    "user/getCartItems",
+    'user/getCartItems',
     async ({ cartItemIds, userCart }, thunkAPI) => {
         try {
             const response = await axiosInstance.get(`/products/${cartItemIds}?type=array`);
@@ -85,7 +85,7 @@ export const getCartItems = createAsyncThunk(
 );
 
 export const removeCartItem = createAsyncThunk(
-    "user/removeCartItem",
+    'user/removeCartItem',
     async (productId, thunkAPI) => {
         try {
             const response = await axiosInstance.delete(`/users/cart?productId=${productId}`);
@@ -105,9 +105,10 @@ export const removeCartItem = createAsyncThunk(
     }
 );
 
-export const payProducts = createAsyncThunk("user/payProducts", async (body, thunkAPI) => {
+export const payProducts = createAsyncThunk('user/payProducts', async (body, thunkAPI) => {
     try {
         const response = await axiosInstance.post(`/users/payment`, body);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -116,7 +117,7 @@ export const payProducts = createAsyncThunk("user/payProducts", async (body, thu
 });
 
 export const updateCartItem = createAsyncThunk(
-    "user/updateCartItem",
+    'user/updateCartItem',
     async (quantity, thunkAPI) => {
         console.log(quantity);
         try {

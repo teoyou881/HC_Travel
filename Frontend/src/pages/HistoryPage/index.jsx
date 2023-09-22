@@ -1,12 +1,11 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Types } from "../../store/user";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Types } from '../../store/user';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 function HistoryPage() {
     const userData = useSelector((state) => state.user?.userData);
     const orderHistory = useSelector((state) => state.user.orderHistory);
-    console.log(orderHistory);
     const dispatch = useDispatch();
 
     // const [orderHistory, setorderHistory] = useState({});
@@ -15,44 +14,44 @@ function HistoryPage() {
     }, [dispatch, userData]);
     return (
         <section>
-            <div className="text-center m-7">
-                <h2 className="text-2xl">History</h2>
+            <div className='text-center m-7'>
+                <h2 className='text-2xl'>History</h2>
             </div>
             {orderHistory?.length > 0 ? (
                 <div>
                     {orderHistory.map((history) => (
-                        <div key={history.id} className="flex justify-center border-2 p-2 m-2">
-                            <div className="w-[920px] h-[330px]">
-                                <div className=" h-[66px] bg-gray-200 ">up</div>
-                                <span className="font-medium text-xl">
+                        <div key={history.id} className='flex justify-center border-2 p-2 m-2'>
+                            <div className='w-[920px] h-[330px]'>
+                                <div className=' h-[66px] bg-gray-200 '>up</div>
+                                <span className='font-medium text-xl'>
                                     {/* TODO
                                                 convert mongoDB date format to yyyy-mm-dd
                                                 this should be done I think.. before saving it to redux
                                                 that means.. at backside? before sending data to front like saga or thunk */}
-                                    Purchased {history.created.createdMonth}{" "}
+                                    Purchased {history.created.createdMonth}{' '}
                                     {history.created.createdDay}
-                                    {", "} {history.created.createdYear}
+                                    {', '} {history.created.createdYear}
                                 </span>
                                 <div>
                                     {history.product?.map((item) => (
                                         // const orderData = new Date(orderHistory.).toISOString().slice(0, 10);
-                                        <div key={item.id} className="mb-2 last:mb-0">
-                                            <div className="flex justify-start">
-                                                <div className="w-[100px] h-[90px] relative">
+                                        <div key={item.id} className='mb-2 last:mb-0'>
+                                            <div className='flex justify-start'>
+                                                <div className='w-[100px] h-[90px] relative'>
                                                     {/* TODO
                                                     when clicking image, go to product detail */}
                                                     <a>
                                                         <img
                                                             src={item.image}
-                                                            className="w-[90px] h-[90px]"></img>
+                                                            className='w-[90px] h-[90px]'></img>
                                                     </a>
                                                     {item.quantity > 1 && (
-                                                        <span className="absolute top-[71px] left-[93px] inline-flex items-center justify-center w-5 h-5 text-xs font-thin text-black bg-white border-[1px] border-gray-400 rounded-full">
+                                                        <span className='absolute top-[71px] left-[93px] inline-flex items-center justify-center w-5 h-5 text-xs font-thin text-black bg-white border-[1px] border-gray-400 rounded-full'>
                                                             {item.quantity}
                                                         </span>
                                                     )}
                                                 </div>
-                                                <div className="pl-4">description</div>
+                                                <div className='pl-4'>description</div>
                                             </div>
                                         </div>
                                     ))}
