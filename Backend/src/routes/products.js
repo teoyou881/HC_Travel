@@ -1,33 +1,33 @@
-const express = require("express");
-const { changeDateFormat } = require("../util/changeDateFormat");
+const express = require('express');
+const { changeDateFormat } = require('../util/changeDateFormat');
 const router = express.Router();
-const auth = require("../middelware/auth");
-const Product = require("../models/Product");
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
-const ObjectId = require("mongodb").ObjectId;
+const auth = require('../middelware/auth');
+const Product = require('../models/Product');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const ObjectId = require('mongodb').ObjectId;
 
 // to use cloudinary
-const { cloudinary, cloudinaryStorage } = require("../../uploads");
-const Payment = require("../models/Payment");
+const { cloudinary, cloudinaryStorage } = require('../../uploads');
+const Payment = require('../models/Payment');
 
 // add public_id to cloudinaryStorage
 // cloudinaryStorage.params.public_id = (req, file) => file.fieldname + "-" + Date.now(); // Generate a unique filename
 // const uploadCloudinary = multer({ storage: cloudinaryStorage }).single("file");
-const uploadCloudinary = multer({ storage: cloudinaryStorage }).array("images");
+const uploadCloudinary = multer({ storage: cloudinaryStorage }).array('images');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "uploads/");
+        cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
         cb(null, `${Date.now()}_${file.originalname}`);
     },
 });
-const upload = multer({ storage }).single("file");
+const upload = multer({ storage }).single('file');
 
-router.post("/", auth, async (req, res, next) => {
+router.post('/', auth, async (req, res, next) => {
     // TODO
     // Before saving the product to MongoDB, upload the file to cloudinary and get the URL information.
     let images = req.body.images;
@@ -53,17 +53,17 @@ router.post("/", auth, async (req, res, next) => {
     Promise.all(
         images.map((image) => {
             // extract only imageName without extension like .jpg
-            const imageName = image.split(".")[0];
-            image = path.join(__dirname, "../../uploads/" + image);
+            const imageName = image.split('.')[0];
+            image = path.join(__dirname, '../../uploads/' + image);
 
             // put each image into array should be deleted.
             deleteArr.push(image);
             return cloudinary.uploader.upload(image, {
-                folder: "HC_Travel", // Cloudinary folder where the files will be stored
+                folder: 'HC_Travel', // Cloudinary folder where the files will be stored
                 public_id: Date.now() + imageName,
                 transformation: [
                     //fill, thumb, limit, fit scale --> crop options
-                    { width: 800, height: 600, crop: "limit" }, // Resize the image
+                    { width: 800, height: 600, crop: 'limit' }, // Resize the image
                 ],
                 tags: [req.body.continent], // Tags to associate with the uploaded image
             });
@@ -90,14 +90,14 @@ router.post("/", auth, async (req, res, next) => {
                         fs.unlinkSync(file);
                         // console.log(file, " is deleted.");
                     } catch (error) {
-                        console.log("deleteArr.forEach", error);
+                        console.log('deleteArr.forEach', error);
                         next(error);
                     }
                 }
             });
         })
         .catch((error) => {
-            console.error("Error uploading images:", error);
+            console.error('Error uploading images:', error);
         })
         /****************************************************************************/
         // I met problem req.body.images didn't changed.
@@ -115,7 +115,7 @@ router.post("/", auth, async (req, res, next) => {
         });
 });
 
-router.post("/image", auth, async (req, res, next) => {
+router.post('/image', auth, async (req, res, next) => {
     upload(req, res, (err) => {
         if (err) {
             return req.status(500).send(err);
@@ -124,12 +124,12 @@ router.post("/image", auth, async (req, res, next) => {
     });
 });
 
-router.delete("/image", auth, async (req, res, next) => {
+router.delete('/image', auth, async (req, res, next) => {
     // console.log("products router delete /image");
     // console.log(req.query.image);
     const imageName = req.query.image;
 
-    const file = path.join(__dirname, "../../uploads/" + imageName);
+    const file = path.join(__dirname, '../../uploads/' + imageName);
 
     if (fs.existsSync(file)) {
         try {
@@ -142,12 +142,12 @@ router.delete("/image", auth, async (req, res, next) => {
     }
 });
 
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     // www.enfksnf.com/product?abc=abc
     // ==> req.query.abc is abc..
     // object in params is the same as above..
-    const order = req.query.order ? req.query.order : "desc";
-    const sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+    const order = req.query.order ? req.query.order : 'desc';
+    const sortBy = req.query.sortBy ? req.query.sortBy : '_id';
     const limit = req.query.limit ? Number(req.query.limit) : 20;
     const skip = req.query.skip ? Number(req.query.skip) : 0;
     const term = req.query.searchTerm;
@@ -155,7 +155,7 @@ router.get("/", async (req, res, next) => {
     let findArgs = {};
     for (let key in req.query.filters) {
         if (req.query.filters[key].length > 0) {
-            if (key === "price") {
+            if (key === 'price') {
                 findArgs[key] = {
                     // Greater than equal
                     $gte: req.query.filters[key][0],
@@ -169,13 +169,13 @@ router.get("/", async (req, res, next) => {
     }
 
     if (term) {
-        findArgs["$text"] = { $search: term };
+        findArgs['$text'] = { $search: term };
     }
 
     // console.log(findArgs);
     try {
         const products = await Product.find(findArgs)
-            .populate("writer")
+            .populate('writer')
             .sort([[sortBy, order]])
             .skip(skip)
             .limit(limit);
@@ -193,13 +193,13 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     const type = req.query.type;
     let productIds = req.params.id;
 
-    if (type === "array") {
+    if (type === 'array') {
         // id=15123,12512 ==> Ids=['21412312','1231241','1246544'] like that
-        let ids = productIds.split(",");
+        let ids = productIds.split(',');
         productIds = ids.map((item) => item);
     }
 
@@ -207,7 +207,7 @@ router.get("/:id", async (req, res, next) => {
     try {
         // https://www.mongodb.com/docs/manual/reference/operator/query/in/
         // how to use $in
-        const product = await Product.find({ _id: { $in: productIds } }).populate("writer");
+        const product = await Product.find({ _id: { $in: productIds } }).populate('writer');
         return res.status(200).send(product);
     } catch (error) {
         next(error);
@@ -220,10 +220,10 @@ router.get("/:id", async (req, res, next) => {
 // I found the solution which this router should be above some specific router;
 // ==> error doesn't exsit when I changed route method get to post.
 
-router.post("/history", async (req, res, next) => {
+router.post('/history', async (req, res, next) => {
     try {
         const userId = new ObjectId(req.body.userId);
-        const payments = await Payment.find({ "user.id": userId });
+        const payments = await Payment.find({ 'user.id': userId });
         const payment = payments.map((payment) => {
             const [createdYear, createdMonth, createdDay] = changeDateFormat(payment.createdAt);
             const [updatedYear, updatedMonth, updatedDay] = changeDateFormat(payment.updatedAt);
@@ -234,6 +234,7 @@ router.post("/history", async (req, res, next) => {
                 product: payment.product,
                 created: { createdYear, createdMonth, createdDay },
                 updated: { updatedYear, updatedMonth, updatedDay },
+                total: payment.total,
             };
         });
 
