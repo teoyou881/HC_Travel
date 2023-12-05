@@ -36,6 +36,11 @@ app.use("/products", require("./routes/products"));
 //     });
 // });
 
+app.get('/', (req, res) => {
+    console.log('Hello World!'  );
+    res.send('Hello World!');
+});
+
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.send(err.message || "error occured at server side");
