@@ -41,6 +41,7 @@ app.use((err, req, res, next) => {
     res.send(err.message || "error occured at server side");
 });
 app.listen(4000, () => {
+    console.log("server is running");
     mongoose
         .connect(process.env.MONGO_URI)
         .then(() => {

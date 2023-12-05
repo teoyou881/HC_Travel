@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import CheckBox from "./Sections/CheckBox";
-import RadioBox from "./Sections/RadioBox";
-import SearchInput from "./Sections/SearchInput";
-import CardItem from "./Sections/CardItem";
-import axiosInstance from "../../utills/axios";
-import { continents, prices } from "../../utills/filterData";
+import React, { useEffect, useState } from 'react';
+import CheckBox from './Sections/CheckBox';
+import RadioBox from './Sections/RadioBox';
+import SearchInput from './Sections/SearchInput';
+import CardItem from './Sections/CardItem';
+import axiosInstance from '../../utills/axios';
+import { continents, prices } from '../../utills/filterData';
 
 const LandingPage = () => {
     const limit = 4;
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
     const [products, setProducts] = useState([]);
     const [skip, setSkip] = useState(0);
     const [hasMore, setHasMore] = useState(false);
@@ -26,7 +26,7 @@ const LandingPage = () => {
         limit,
         loadMore = false,
         filters = {},
-        searchTerm = "",
+        searchTerm = '',
     }) => {
         const params = {
             skip,
@@ -36,7 +36,8 @@ const LandingPage = () => {
         };
 
         try {
-            const response = await axiosInstance.get("/products", { params });
+            console.log('params', params);
+            const response = await axiosInstance.get('/products', { params });
             if (loadMore) {
                 setProducts([...products, ...response.data.products]);
             } else {
@@ -64,7 +65,7 @@ const LandingPage = () => {
         const newFilters = { ...filters };
         newFilters[category] = newFilteredData;
 
-        if (category === "price") {
+        if (category === 'price') {
             const priceValues = handlePrice(newFilteredData);
             newFilters[category] = priceValues;
         }
@@ -110,35 +111,35 @@ const LandingPage = () => {
     return (
         <>
             <section>
-                <div className="text-center m-7">
-                    <h2 className="text-2xl"> HC Travel </h2>
+                <div className='text-center m-7'>
+                    <h2 className='text-2xl'> HC Travel </h2>
                 </div>
 
                 {/* todo -> search */}
-                <div className="flex justify-end  mb-3  ">
+                <div className='flex justify-end  mb-3  '>
                     <SearchInput searchTerm={searchTerm} onSearch={handleSearchTerm} />
                 </div>
 
                 {/* todo -> filter */}
-                <div className="flex gap-3">
-                    <div className="w-1/2">
+                <div className='flex gap-3'>
+                    <div className='w-1/2'>
                         <CheckBox
                             continents={continents}
                             checkedContinents={filters.continents}
-                            onFilters={(filters) => handleFilters(filters, "continents")}
+                            onFilters={(filters) => handleFilters(filters, 'continents')}
                         />
                     </div>
-                    <div className="w-1/2">
+                    <div className='w-1/2'>
                         <RadioBox
                             prices={prices}
                             checkedPrice={filters.price}
-                            onFilters={(filters) => handleFilters(filters, "price")}
+                            onFilters={(filters) => handleFilters(filters, 'price')}
                         />
                     </div>
                 </div>
 
                 {/* todo -> card */}
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                <div className='grid grid-cols-2 gap-4 sm:grid-cols-4'>
                     {products.map((product) => (
                         <CardItem product={product} key={product._id} />
                     ))}
@@ -146,9 +147,9 @@ const LandingPage = () => {
 
                 {/* todo -> load more */}
                 {hasMore && (
-                    <div className="flex justify-center mt-5">
+                    <div className='flex justify-center mt-5'>
                         <button
-                            className="px-3 py-1 mt-5 text-white bg-black rounded-md hover:bg-gray-800"
+                            className='px-3 py-1 mt-5 text-white bg-black rounded-md hover:bg-gray-800'
                             onClick={handleLoadMore}>
                             More
                         </button>

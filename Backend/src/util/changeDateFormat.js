@@ -1,3 +1,4 @@
+// help to extract year, month, and day from Date format .
 function changeDateFormat(date) {
     date = date.setMonth(date.getMonth());
     const year = new Date(date).toISOString().slice(0, 4);
