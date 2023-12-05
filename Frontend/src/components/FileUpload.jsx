@@ -1,6 +1,7 @@
 import React from "react";
 import Dropzone from "react-dropzone";
 import axiosInstance from "../utills/axios";
+import {backUrl} from '../../config/config.js';
 function FileUpload({ images, onImageChange }) {
     const handleDrop = async (files) => {
         // must use FormData when we pass file
@@ -64,7 +65,7 @@ function FileUpload({ images, onImageChange }) {
                     <div key={image} onClick={() => handleDelete(image)}>
                         <img
                             className="min-w-[300px] h-[300px]"
-                            src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
+                            src={`${backUrl}/${image}`}
                             alt={image}
                         />
                     </div>

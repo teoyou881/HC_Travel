@@ -1,9 +1,10 @@
 import axios from "axios";
+import {backUrl} from '../../config/config.js';
 
 const axiosInstance = axios.create({
     /* Now we are using vite. When using vite, if you want to use environment variables,
      you can enter the environment variables after import.meta.env. */
-    baseURL: import.meta.env.PROD ? "" : import.meta.env.VITE_SERVER_URL,
+    baseURL: import.meta.env.PROD ? "" : backUrl,
 });
 
 // https://axios-http.com/docs/interceptors
