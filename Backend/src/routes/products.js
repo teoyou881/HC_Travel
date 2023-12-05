@@ -1,6 +1,6 @@
 const express = require('express');
-const { changeDateFormat } = require('../util/changeDateFormat');
 const router = express.Router();
+const { changeDateFormat } = require('../util/changeDateFormat');
 const auth = require('../middelware/auth');
 const Product = require('../models/Product');
 const multer = require('multer');
@@ -32,8 +32,6 @@ router.post('/', auth, async (req, res, next) => {
     // Before saving the product to MongoDB, upload the file to cloudinary and get the URL information.
     let images = req.body.images;
     //const images = tempArr.map((image) => (image = path.join(__dirname, "../../uploads/" + image)));
-    // console.log(images);
-    // console.log(req.body.continent);
 
     // async, await code
     /* const uploadImagesSequentially = async () => {
@@ -77,7 +75,7 @@ router.post('/', auth, async (req, res, next) => {
             const imageUrl = results.map((result) => result.url);
 
             //TODO
-            /* 
+            /*
         Put the fetched URL data into the req.body.images array.
         Call the delete method to delete the photos temporarily stored in the local uploads folder.
         */
@@ -146,6 +144,10 @@ router.get('/', async (req, res, next) => {
     // www.enfksnf.com/product?abc=abc
     // ==> req.query.abc is abc..
     // object in params is the same as above..
+
+    const ewofn = await Product.find()
+    console.log(ewofn);
+
     const order = req.query.order ? req.query.order : 'desc';
     const sortBy = req.query.sortBy ? req.query.sortBy : '_id';
     const limit = req.query.limit ? Number(req.query.limit) : 20;
@@ -179,6 +181,9 @@ router.get('/', async (req, res, next) => {
             .sort([[sortBy, order]])
             .skip(skip)
             .limit(limit);
+
+        const ex = await Product.find();
+        console.log(ex  );
 
         // to check whether more button should be needed
         const productsTotal = await Product.countDocuments(findArgs);
