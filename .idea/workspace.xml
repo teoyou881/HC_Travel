@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e4658213-0a0c-4463-9681-2e8bfaea27f8" name="Changes" comment="add git /">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701792168505</updated>
       <workItem from="1701792169850" duration="8040000" />
-      <workItem from="1701810815377" duration="4619000" />
+      <workItem from="1701810815377" duration="5132000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -136,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701815507487</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add git /">
+      <option name="closed" value="true" />
+      <created>1701815650178</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701815650178</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

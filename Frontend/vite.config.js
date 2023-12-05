@@ -7,5 +7,8 @@ export default defineConfig({
     plugins: [react(), eslint()],
     define: {
         "process.env": {},
+        port: process.env.NODE_ENV === 'production' ?
+
+          process.env.BACK_URL : 4000
     },
 });
