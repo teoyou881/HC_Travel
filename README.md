@@ -1,4 +1,5 @@
 # HC_Travel
+### URL: https://web-hc-travel-asdlkjghaso-32updzt2alpstkco5.sel4.cloudtype.app
 ### HC_Travel is a travel website that allows users to book a trip to a destination of their choice. The website is built with React, Redux, Express, MongoDB, and TailwindCSS. The website is deployed on Heroku and can be accessed [here](https://hc-travel.herokuapp.com/).
 
 ## Stacks
@@ -18,8 +19,10 @@
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-%23F7DF1E.svg?style=for-the-badge&logo=vite&logoColor=black)
 <img src="https://img.shields.io/badge/cloudinary-blue?style=for-the-badge&logo=winscp&logoColor=white"/>
 ### Database & ORM
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 <img src="https://img.shields.io/badge/mongoose-blue?style=for-the-badge&logo=winscp&logoColor=white"/>
-
+### Deployment
+<img src="https://img.shields.io/badge/cloudtype-blue?style=for-the-badge&logo=winscp&logoColor=white"/>
