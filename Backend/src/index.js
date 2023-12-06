@@ -17,12 +17,23 @@ dotenv.config();
 // can set options. --> cors(corsOptions)  search for it later if it is nedded.
 // can also apply it to specific routes.
 // app.use(cors());
-app.use(
-  cors({
-      origin: true,
-      credentials: true,
-  }),
-);
+if (process.env.NODE_ENV === 'production') {
+    app.use(
+      cors({
+          // domain was changed 'https~'
+          'origin': ['https://teonodex.com'],
+          'credentials': true,
+      }),
+    );
+}else{
+    app.use(
+      cors({
+          origin: true,
+          credentials: true,
+      }),
+    );
+}
+
 app.use(express.json()); // for JSON
 app.use(express.urlencoded({ extended: true })); // for x-www-form-urlencoded (Values submitted in form)
 // Use absolute paths because relative paths can cause errors.
