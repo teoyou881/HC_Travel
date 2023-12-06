@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(
       cors({
           // domain was changed 'https~'
-          origin: ['https://web-hc-travel-front-32updzt2alpstkco5.sel4.cloudtype.app', 'http://localhost:4173'],
+          origin: ['https://web-hc-travel-asdlkjghaso-32updzt2alpstkco5.sel4.cloudtype.app','http://localhost:4173'],
       }),
     );
 }else{
