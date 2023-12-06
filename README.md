@@ -1,6 +1,6 @@
 # HC_Travel
 ### URL: https://web-hc-travel-asdlkjghaso-32updzt2alpstkco5.sel4.cloudtype.app
-### HC_Travel is a travel website that allows users to book a trip to a destination of their choice. The website is built with React, Redux, Express, MongoDB, and TailwindCSS. The website is deployed on Heroku and can be accessed [here](https://hc-travel.herokuapp.com/).
+### HC_Travel is a travel website that allows users to book a trip to a destination of their choice. The website is built with React, Redux, Express, MongoDB, and TailwindCSS.
 
 ## Stacks
 ### Environment
