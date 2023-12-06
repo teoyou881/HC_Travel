@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(
       cors({
           // domain was changed 'https~'
-          'origin': ['https://teonodex.com'],
+          'origin': ['https://web-hc-travel-asdlkjghaso-32updzt2alpstkco5.sel4.cloudtype.app/'],
           'credentials': true,
       }),
     );
