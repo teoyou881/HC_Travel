@@ -4,7 +4,7 @@ import {backUrl} from '../../config/config.js';
 const axiosInstance = axios.create({
     /* Now we are using vite. When using vite, if you want to use environment variables,
      you can enter the environment variables after import.meta.env. */
-    baseURL: process.env.NODE_ENV === 'production' ?  backUrl : "http://localhost:4000",
+    baseURL:backUrl
 });
 
 // https://axios-http.com/docs/interceptors
