@@ -9,6 +9,7 @@ function CartPage() {
     const cartDetail = useSelector((state) => state.user?.cartDetail);
     const [total, setTotal] = useState(0);
 
+    // console.log(cartDetail);
     const calculateTotal = useCallback(
         (cartDetail) => {
             let totalPrice = 0;
