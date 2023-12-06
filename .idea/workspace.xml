@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4658213-0a0c-4463-9681-2e8bfaea27f8" name="Changes" comment="set bacurl">
+    <list default="true" id="e4658213-0a0c-4463-9681-2e8bfaea27f8" name="Changes" comment="upload dist">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701792168505</updated>
       <workItem from="1701792169850" duration="8040000" />
-      <workItem from="1701810815377" duration="8480000" />
+      <workItem from="1701810815377" duration="9078000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -176,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701818587151</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="upload dist">
+      <option name="closed" value="true" />
+      <created>1701820118779</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1701820118779</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,6 +208,7 @@
     <MESSAGE value="set backurl in config folder" />
     <MESSAGE value="npm i http-server and create start script" />
     <MESSAGE value="set bacurl" />
-    <option name="LAST_COMMIT_MESSAGE" value="set bacurl" />
+    <MESSAGE value="upload dist" />
+    <option name="LAST_COMMIT_MESSAGE" value="upload dist" />
   </component>
 </project>
