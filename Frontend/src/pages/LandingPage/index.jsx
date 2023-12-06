@@ -38,6 +38,7 @@ const LandingPage = () => {
         try {
             console.log('params', params);
             const response = await axiosInstance.get('/products', { params });
+            console.log('response data', response.data);
             if (loadMore) {
                 setProducts([...products, ...response.data.products]);
             } else {

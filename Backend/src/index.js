@@ -20,7 +20,8 @@ dotenv.config();
 if (process.env.NODE_ENV === 'production') {
     app.use(
       cors({
-         origin:true
+          // domain was changed 'https~'
+          origin: ['https://web-hc-travel-asdlkjghaso-32updzt2alpstkco5.sel4.cloudtype.app/'],
       }),
     );
 }else{

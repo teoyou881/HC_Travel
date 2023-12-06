@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4658213-0a0c-4463-9681-2e8bfaea27f8" name="Changes" comment="fix cors">
+    <list default="true" id="e4658213-0a0c-4463-9681-2e8bfaea27f8" name="Changes" comment="fix cors1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/config/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/config/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/LandingPage/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/LandingPage/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/utills/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/utills/axios.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +84,7 @@
       <workItem from="1701792169850" duration="8040000" />
       <workItem from="1701810815377" duration="12791000" />
       <workItem from="1701826521764" duration="950000" />
-      <workItem from="1701838796449" duration="5438000" />
+      <workItem from="1701838796449" duration="6618000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -245,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701872143634</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="fix cors1">
+      <option name="closed" value="true" />
+      <created>1701873135569</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1701873135569</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,6 +286,7 @@
     <MESSAGE value="add credentials and fix cors" />
     <MESSAGE value="fix cors&#10; 'origin': ['https://web-hc-travel-asdlkjghaso-32updzt2alpstkco5.sel4.cloudtype.app/']," />
     <MESSAGE value="fix cors" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix cors" />
+    <MESSAGE value="fix cors1" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix cors1" />
   </component>
 </project>
