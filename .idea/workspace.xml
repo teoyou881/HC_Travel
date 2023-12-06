@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4658213-0a0c-4463-9681-2e8bfaea27f8" name="Changes" comment="fix a bug map is not a function in cart">
+    <list default="true" id="e4658213-0a0c-4463-9681-2e8bfaea27f8" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/dist/assets/index-a2218d0e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/routes/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/routes/products.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/utills/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/utills/axios.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +83,7 @@
       <workItem from="1701792169850" duration="8040000" />
       <workItem from="1701810815377" duration="12791000" />
       <workItem from="1701826521764" duration="950000" />
-      <workItem from="1701838796449" duration="1828000" />
+      <workItem from="1701838796449" duration="3357000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -207,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701823960040</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="fix">
+      <option name="closed" value="true" />
+      <created>1701869690797</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1701869690797</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +241,7 @@
     <MESSAGE value="upload dist" />
     <MESSAGE value="create .gitignore" />
     <MESSAGE value="fix a bug map is not a function in cart" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix a bug map is not a function in cart" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
 </project>

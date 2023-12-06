@@ -145,8 +145,7 @@ router.get('/', async (req, res, next) => {
     // ==> req.query.abc is abc..
     // object in params is the same as above..
 
-    const ewofn = await Product.find()
-    console.log(ewofn);
+    console.log("products router get '/");
 
     const order = req.query.order ? req.query.order : 'desc';
     const sortBy = req.query.sortBy ? req.query.sortBy : '_id';
@@ -181,9 +180,6 @@ router.get('/', async (req, res, next) => {
             .sort([[sortBy, order]])
             .skip(skip)
             .limit(limit);
-
-        const ex = await Product.find();
-        console.log(ex  );
 
         // to check whether more button should be needed
         const productsTotal = await Product.countDocuments(findArgs);
