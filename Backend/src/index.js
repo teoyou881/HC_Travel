@@ -12,7 +12,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const port = 4000;
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config();
 
 
 // can set options. --> cors(corsOptions)  search for it later if it is nedded.
@@ -63,7 +63,6 @@ app.use((err, req, res, next) => {
 });
 app.listen(4000, () => {
     console.log("server is running");
-    console.log('🔍 MONGO_URI:', process.env.MONGO_URI);
     mongoose
         .connect(process.env.MONGO_URI)
         .then(() => {
